@@ -8,10 +8,8 @@ void greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, i
 
     coloration[node] = color;
 
-    for (int i = 0; i < nodeCount; i++)
-    {
-        //color every adjacent node that is not colored respecting the coloring restrictions
-    }
+    // color every adjacent node that is not colored respecting the coloring restrictions
+    // in such a way to minimize the maxColorValue at every step
     // select an adjacent node randomly
     // color its ajacent nodes
     // repeat

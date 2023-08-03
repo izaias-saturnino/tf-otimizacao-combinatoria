@@ -36,13 +36,25 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
     for(int firstNodeIterator = 0; firstNodeIterator < nodeCount; firstNodeIterator++){
         int firstNodeAvaliableColors[colorCount];
         getAvaliableColors(nodeAjacencyList, coloration, nodeCount, colorCount, firstNodeIterator, firstNodeAvaliableColors);
-        for(int firstNodeColorIterator = 0; firstNodeColorIterator < colorCount; firstNodeColorIterator++){
-            if(firstNodeAvaliableColors[firstNodeColorIterator]){
-                for(int secondNodeIterator = 0; secondNodeIterator < nodeCount; secondNodeIterator++){
-                    int secondNodeAvaliableColors[colorCount];
-                    getAvaliableColors(nodeAjacencyList, coloration, nodeCount, colorCount, secondNodeIterator, secondNodeAvaliableColors);
-                    for(int secondNodeColorIterator = 0; secondNodeColorIterator < colorCount; secondNodeColorIterator++){
-                        if(secondNodeAvaliableColors[secondNodeColorIterator]){
+        for(int secondNodeIterator = 0; secondNodeIterator < nodeCount; secondNodeIterator++){
+            int secondNodeAvaliableColors[colorCount];
+            getAvaliableColors(nodeAjacencyList, coloration, nodeCount, colorCount, secondNodeIterator, secondNodeAvaliableColors);
+            
+            int nodes_adjacent = areNodesAdjacent(firstNodeIterator, secondNodeIterator);
+            
+            for(int firstNodeColorIterator = 0; firstNodeColorIterator < colorCount; firstNodeColorIterator++){
+                for(int secondNodeColorIterator = 0; secondNodeColorIterator < colorCount; secondNodeColorIterator++){
+                    
+                    if(nodes_adjacent){
+                        if(firstNodeColorIterator == secondNodeColorIterator){
+                            continue;
+                        }
+                        firstNodeAvaliableColors[secondNodeColorIterator] -= 1;
+                        secondNodeAvaliableColors[firstNodeColorIterator] -= 1;
+                    }
+                    
+                    if(!firstNodeAvaliableColors[firstNodeColorIterator]){
+                        if(!secondNodeAvaliableColors[secondNodeColorIterator]){
                             if(firstNodeColorIterator != maxColor && secondNodeColorIterator != maxColor && maxColor != -1){
                                 continue;
                             }
