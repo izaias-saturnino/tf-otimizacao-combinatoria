@@ -1,3 +1,39 @@
+//returns lowest avaliable color in terms of total weight
+int getLowestAvaliableColor(int* totalColorWeights, int* avaliableColors, int colorCount){
+    int lowestAvaliableColor = -1;
+    int lowestTotalColorWeights = 0;
+    for (int i = 0; i < colorCount; i++)
+    {
+        if(!avaliableColors[i]){
+            if(lowestAvaliableColor == -1){
+                lowestAvaliableColor = i;
+                lowestTotalColorWeights = totalColorWeights[i];
+            }
+            else if(lowestTotalColorWeights > totalColorWeights[i]){
+                lowestAvaliableColor = i;
+                lowestTotalColorWeights = totalColorWeights[i];
+            }
+        }
+    }
+    return lowestAvaliableColor;
+}
+
+//returns highest avaliable color in terms of total weight
+int getHighestAvaliableColor(int* totalColorWeights, int* avaliableColors){
+    //TODO
+    //its a copy of the function above
+    //only code it if its going to be used
+    return 0;
+}
+
+//returns array with lowest and highest avaliable color in terms of total weight
+int* getLowestAndHighestAvaliableColor(int* totalColorWeights, int* avaliableColors){
+    //TODO
+    //its a copy of the two functions above
+    //only code it if its going to be used
+    return 0;
+}
+
 //Changes the value of nodeAjancencyList to have a list of ajacent nodes for each node. Each list of ajacent nodes is terminated by -1.
 void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weights, int* coloration, int** nodeAjacencyList){
     int lastAdjacentNodePos[nodeCount];
