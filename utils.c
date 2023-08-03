@@ -80,7 +80,8 @@ void getAvaliableColors(int** nodeAjacencyList, int* coloration, int nodeCount, 
             if(nodeAjacencyList[i][j] == -1){
                 break;
             }
-            int currentColor = coloration[nodeAjacencyList[i][j]];
+            int currentNode = nodeAjacencyList[i][j];
+            int currentColor = coloration[currentNode];
             avaliableColors[currentColor]++;
         }
     }
@@ -90,10 +91,11 @@ int areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int 
     int i = firstNode;
     int areAdjacent = 0;
     for(int j = 0; j < nodeCount; j++){
-        if(nodeAjacencyList[i][j] == -1){
+        int currentNode = nodeAjacencyList[i][j];
+        if(currentNode == -1){
             break;
         }
-        if(nodeAjacencyList[i][j] == secondNode){
+        if(currentNode == secondNode){
             areAdjacent = 1;
             break;
         }
