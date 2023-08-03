@@ -23,9 +23,11 @@ int getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeN
 //Changes the values of firstNode, secondNode, firstColor, secondColor to the values of the best neighbour for the current graph. Returns the new maxColorValue
 int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int* totalColorWeights, int* coloration, int maxColorValue, int* weights, int* firstNode, int* secondNode, int* firstColor, int* secondColor){
     if(colorCount < 3){
+        //TODO
         return;
     }
     if(nodeCount < 3){
+        //TODO
         return;
     }
     *firstNode = 0;

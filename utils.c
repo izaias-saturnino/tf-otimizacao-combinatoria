@@ -1,3 +1,21 @@
+//returns lowest color in terms of total weight
+int getLowestColor(int* totalColorWeights, int colorCount){
+    int lowestAvaliableColor = -1;
+    int lowestTotalColorWeights = 0;
+    for (int i = 0; i < colorCount; i++)
+    {
+        if(lowestAvaliableColor == -1){
+            lowestAvaliableColor = i;
+            lowestTotalColorWeights = totalColorWeights[i];
+        }
+        else if(lowestTotalColorWeights > totalColorWeights[i]){
+            lowestAvaliableColor = i;
+            lowestTotalColorWeights = totalColorWeights[i];
+        }
+    }
+    return lowestAvaliableColor;
+}
+
 //returns lowest avaliable color in terms of total weight
 int getLowestAvaliableColor(int* totalColorWeights, int* avaliableColors, int colorCount){
     int lowestAvaliableColor = -1;
