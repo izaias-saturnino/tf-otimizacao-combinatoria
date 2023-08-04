@@ -81,34 +81,39 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, in
         coloredAdjacentNodes[i] = 0;
     }
 
-    int totalColoredAdjacentNodes = 0;
+    int totalColoredAdjacentNodes = 1;
+    int oldTotalColoredAdjacentNodes = 0;
 
     int error = 0;
 
     while(totalColoredAdjacentNodes < nodeCount){
 
-        int nodesLeft = 0;
+        if(totalColoredAdjacentNodes <= oldTotalColoredAdjacentNodes){
+            int nodesLeft = 0;
 
-        for (int i = 0; i < nodeCount; i++)
-        {
-            nodesLeft += toColorAdjacentNodes[i];
-        }
-        
-        if(nodesLeft == 0){
-            int node;
-            for (node = 0; node < nodeCount; node++)
+            for (int i = 0; i < nodeCount; i++)
             {
-                if(coloredAdjacentNodes[node] == 0){
-                    break;
-                }
+                nodesLeft += toColorAdjacentNodes[i];
             }
             
-            int color = getLowestColor(totalColorWeights, colorCount);
+            if(nodesLeft == 0){
+                int node;
+                for (node = 0; node < nodeCount; node++)
+                {
+                    if(coloredAdjacentNodes[node] == 0){
+                        break;
+                    }
+                }
+                
+                int color = getLowestColor(totalColorWeights, colorCount);
 
-            coloration[node] = color;
-            totalColorWeights[color] += weights[node];
+                coloration[node] = color;
+                totalColorWeights[color] += weights[node];
 
-            toColorAdjacentNodes[node] = 1;
+                toColorAdjacentNodes[node] = 1;
+            }
+
+            oldTotalColoredAdjacentNodes = totalColoredAdjacentNodes;
         }
 
         for (int i = 0; i < nodeCount; i++)
