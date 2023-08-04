@@ -1,10 +1,10 @@
 #include <time.h>
 #include <stdlib.h>
 #include "utils.h"
+#include "greedy.h"
 
-//Selects the node coloration with the lowest maxValue in this step. Returns the selected color if coloring was possible and -1 if it was not.
 int colorNode(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int node){
-    if(coloration[node] != -1){
+    if(coloration[node] != UNDEFINED){
         return coloration[node];
     }
     int nodeAvaliableColors[colorCount];
@@ -13,28 +13,26 @@ int colorNode(int nodeCount, int colorCount, int** nodeAjacencyList, int* weight
     return nodeBestColor;
 }
 
-//Colors every adjacent node following the colorNode() heuristic. returns -1 if the adjacent nodes could not be colored
 int colorAdjacentNodes(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int node, int adjacentNodesCount){
-    int color = 0;
     int i = node;
 
     int firstAdjacentNodePos = rand() % adjacentNodesCount;
 
     int firstAdjacentNode = nodeAjacencyList[i][firstAdjacentNodePos];
 
-    color = colorNode(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, firstAdjacentNode);
+    int color = colorNode(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, firstAdjacentNode);
 
-    if(color == -1){
+    if(color == UNDEFINED){
         return color;
     }
 
     for(int j = 0; j < nodeCount; j++){
         int currentNode = nodeAjacencyList[i][j];
-        if(currentNode == -1){
+        if(currentNode == END_OF_LIST){
             break;
         }
         color = colorNode(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, currentNode);
-        if(color == -1){
+        if(color == UNDEFINED){
             break;
         }
         else{
@@ -44,7 +42,6 @@ int colorAdjacentNodes(int nodeCount, int colorCount, int** nodeAjacencyList, in
     return color;
 }
 
-//colors the graph following the colorNode heuristic. returns -1 if was not able to construct following the heuristic
 int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int* adjacentNodeQuantity){
 
     for (int i = 0; i < colorCount; i++)
@@ -54,27 +51,27 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, in
     
     srand(time(NULL));
 
-    int toColorAdjacentNodes[nodeCount];
+    bool toColorAdjacentNodes[nodeCount];
 
     for (int i = 0; i < nodeCount; i++)
     {
-        toColorAdjacentNodes[i] = 0;
+        toColorAdjacentNodes[i] = false;
     }
 
     int firstNodeToColor = rand() % nodeCount;
-    toColorAdjacentNodes[firstNodeToColor] = 1;
+    toColorAdjacentNodes[firstNodeToColor] = true;
 
-    int coloredAdjacentNodes[nodeCount];
+    bool coloredAdjacentNodes[nodeCount];
 
     for (int i = 0; i < nodeCount; i++)
     {
-        coloredAdjacentNodes[i] = 0;
+        coloredAdjacentNodes[i] = false;
     }
 
     int totalColoredAdjacentNodes = 1;
     int oldTotalColoredAdjacentNodes = 0;
 
-    int error = 0;
+    int returnValue = 0;
 
     while(totalColoredAdjacentNodes < nodeCount){
 
@@ -90,7 +87,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, in
                 int node;
                 for (node = 0; node < nodeCount; node++)
                 {
-                    if(coloredAdjacentNodes[node] == 0){
+                    if(coloredAdjacentNodes[node] == false){
                         break;
                     }
                 }
@@ -100,7 +97,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, in
                 coloration[node] = color;
                 totalColorWeights[color] += weights[node];
 
-                toColorAdjacentNodes[node] = 1;
+                toColorAdjacentNodes[node] = true;
             }
 
             oldTotalColoredAdjacentNodes = totalColoredAdjacentNodes;
@@ -109,27 +106,30 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, in
         for (int i = 0; i < nodeCount; i++)
         {
             if(toColorAdjacentNodes[i]){
-                error = colorAdjacentNodes(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, i, adjacentNodeQuantity[i]);
-                if(error == -1){
+                returnValue = colorAdjacentNodes(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, i, adjacentNodeQuantity[i]);
+                if(returnValue < 0){
                     break;
                 }
                 totalColoredAdjacentNodes++;
-                toColorAdjacentNodes[i] = 0;
-                coloredAdjacentNodes[i] = 1;
+                toColorAdjacentNodes[i] = false;
+                coloredAdjacentNodes[i] = true;
+
+                //add adjacent nodes to toColorAdjacentNodes
                 for (int j = 0; j < nodeCount; j++)
                 {
                     int currentNode = nodeAjacencyList[i][j];
-                    if(currentNode != -1){
-                        if(coloredAdjacentNodes[currentNode] == 0){
-                            toColorAdjacentNodes[currentNode] = 1;
-                        }
+                    if(currentNode == END_OF_LIST){
+                        break;
+                    }
+                    if(coloredAdjacentNodes[currentNode] == false){
+                        toColorAdjacentNodes[currentNode] = true;
                     }
                 }
             }
         }
-        if(error == -1){
+        if(returnValue < 0){
             break;
         }
     }
-    return error;
+    return returnValue;
 }

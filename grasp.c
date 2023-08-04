@@ -1,19 +1,20 @@
 #include "greedy.h"
+#include "utils.h"
 
 int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* adjacentNodeQuantity){
     int totalColorWeights[colorCount];
-    int maxValueInit = 0;
+    bool maxValueInit = false;
     int maxValue = 0;
 
-    int error = -1;
-    while(error == -1){
-        error = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeQuantity);
+    int returnValue = UNDEFINED;
+    while(returnValue == UNDEFINED){
+        returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeQuantity);
     }
 
     for(int i = 0; i < colorCount; i++){
         if(!maxValueInit){
             maxValue = totalColorWeights[i];
-            maxValueInit = 1;
+            maxValueInit = true;
         }
         else if(maxValue < totalColorWeights[i]){
             maxValue = totalColorWeights[i];
@@ -28,8 +29,8 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, i
     int secondColor;
     int maxColor;
 
-    if(maxValueInit == 0){
-        printf("ERROR: expected value of maxValueInit is 1\n");
+    if(!maxValueInit){
+        printf("ERROR: expected value for maxValueInit: true\n");
     }
 
     while(maxValue != newMaxValue){

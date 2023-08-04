@@ -1,10 +1,11 @@
-//returns lowest color in terms of total weight
+#include "utils.h"
+
 int getLowestColor(int* totalColorWeights, int colorCount){
-    int lowestAvaliableColor = -1;
+    int lowestAvaliableColor = UNDEFINED;
     int lowestTotalColorWeights = 0;
     for (int i = 0; i < colorCount; i++)
     {
-        if(lowestAvaliableColor == -1){
+        if(lowestAvaliableColor == UNDEFINED){
             lowestAvaliableColor = i;
             lowestTotalColorWeights = totalColorWeights[i];
         }
@@ -16,14 +17,13 @@ int getLowestColor(int* totalColorWeights, int colorCount){
     return lowestAvaliableColor;
 }
 
-//returns lowest avaliable color in terms of total weight
 int getLowestAvaliableColor(int* totalColorWeights, int* avaliableColors, int colorCount){
-    int lowestAvaliableColor = -1;
+    int lowestAvaliableColor = UNDEFINED;
     int lowestTotalColorWeights = 0;
     for (int i = 0; i < colorCount; i++)
     {
         if(!avaliableColors[i]){
-            if(lowestAvaliableColor == -1){
+            if(lowestAvaliableColor == UNDEFINED){
                 lowestAvaliableColor = i;
                 lowestTotalColorWeights = totalColorWeights[i];
             }
@@ -36,23 +36,6 @@ int getLowestAvaliableColor(int* totalColorWeights, int* avaliableColors, int co
     return lowestAvaliableColor;
 }
 
-//returns highest avaliable color in terms of total weight
-int getHighestAvaliableColor(int* totalColorWeights, int* avaliableColors){
-    //TODO
-    //its a copy of the function above
-    //only code it if its going to be used
-    return 0;
-}
-
-//returns array with lowest and highest avaliable color in terms of total weight
-int* getLowestAndHighestAvaliableColor(int* totalColorWeights, int* avaliableColors){
-    //TODO
-    //its a copy of the two functions above
-    //only code it if its going to be used
-    return 0;
-}
-
-//Changes the value of nodeAjancencyList to have a list of ajacent nodes for each node. Each list of ajacent nodes is terminated by -1.
 void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weights, int* coloration, int** nodeAjacencyList, int* lastAdjacentNodePos){
     for (int i = 0; i < nodeCount; i++)
     {
@@ -72,19 +55,17 @@ void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weig
     for (int i = 0; i < nodeCount; i++)
     {
         if(lastAdjacentNodePos[i] < nodeCount){
-            nodeAjacencyList[i][lastAdjacentNodePos[i]] = -1;
+            nodeAjacencyList[i][lastAdjacentNodePos[i]] = END_OF_LIST;
         }
     }
 }
 
-//Changes the value of coloration to an array full of negative ones
 void getEmptyColoration(int nodeCount, int* coloration){
     for(int i = 0; i < nodeCount; i++){
-        coloration[i] = -1;
+        coloration[i] = UNDEFINED;
     }
 }
 
-//Changes the value of avaliableColors to an array with the avaliableColors. The array position is equal to the number of adjacent nodes with the same color as the array position
 void getAvaliableColors(int** nodeAjacencyList, int* coloration, int nodeCount, int colorCount, int node, int* avaliableColors){
     
     for (int i = 0; i < colorCount; i++)
@@ -94,7 +75,7 @@ void getAvaliableColors(int** nodeAjacencyList, int* coloration, int nodeCount, 
     
     for(int i = 0; i < nodeCount; i++){
         for(int j = 0; j < nodeCount; j++){
-            if(nodeAjacencyList[i][j] == -1){
+            if(nodeAjacencyList[i][j] == END_OF_LIST){
                 break;
             }
             int currentNode = nodeAjacencyList[i][j];
@@ -104,16 +85,16 @@ void getAvaliableColors(int** nodeAjacencyList, int* coloration, int nodeCount, 
     }
 }
 
-int areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int nodeCount){
+bool areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int nodeCount){
     int i = firstNode;
-    int areAdjacent = 0;
+    bool areAdjacent = false;
     for(int j = 0; j < nodeCount; j++){
         int currentNode = nodeAjacencyList[i][j];
-        if(currentNode == -1){
+        if(currentNode == END_OF_LIST){
             break;
         }
         if(currentNode == secondNode){
-            areAdjacent = 1;
+            areAdjacent = true;
             break;
         }
     }
