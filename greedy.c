@@ -43,13 +43,6 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, in
     
     srand(time(NULL));
 
-    int coloredAdjacentNodes[nodeCount];
-
-    for (int i = 0; i < nodeCount; i++)
-    {
-        coloredAdjacentNodes[i] = 0;
-    }
-
     int toColorAdjacentNodes[nodeCount];
 
     for (int i = 0; i < nodeCount; i++)
@@ -57,9 +50,19 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, in
         toColorAdjacentNodes[i] = 0;
     }
 
-    int error = 0;
+    int firstNodeToColor = rand() % nodeCount;
+    toColorAdjacentNodes[firstNodeToColor] = 1;
+
+    int coloredAdjacentNodes[nodeCount];
+
+    for (int i = 0; i < nodeCount; i++)
+    {
+        coloredAdjacentNodes[i] = 0;
+    }
 
     int totalColoredAdjacentNodes = 0;
+
+    int error = 0;
 
     while(totalColoredAdjacentNodes < nodeCount){
 
