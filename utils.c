@@ -53,8 +53,7 @@ int* getLowestAndHighestAvaliableColor(int* totalColorWeights, int* avaliableCol
 }
 
 //Changes the value of nodeAjancencyList to have a list of ajacent nodes for each node. Each list of ajacent nodes is terminated by -1.
-void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weights, int* coloration, int** nodeAjacencyList){
-    int lastAdjacentNodePos[nodeCount];
+void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weights, int* coloration, int** nodeAjacencyList, int* lastAdjacentNodePos){
     for (int i = 0; i < nodeCount; i++)
     {
         lastAdjacentNodePos[i] = 0;

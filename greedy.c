@@ -14,19 +14,9 @@ int colorNode(int nodeCount, int colorCount, int** nodeAjacencyList, int* weight
 }
 
 //Colors every adjacent node following the colorNode() heuristic. returns -1 if the adjacent nodes could not be colored
-int colorAdjacentNodes(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int node){
+int colorAdjacentNodes(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int node, int adjacentNodesCount){
     int color = 0;
     int i = node;
-
-    int adjacentNodesCount = 0;
-
-    for(int j = 0; j < nodeCount; j++){
-        int currentNode = nodeAjacencyList[i][j];
-        if(currentNode == -1){
-            adjacentNodesCount++;
-            break;
-        }
-    }
 
     int firstAdjacentNodePos = rand() % adjacentNodesCount;
 
@@ -55,7 +45,7 @@ int colorAdjacentNodes(int nodeCount, int colorCount, int** nodeAjacencyList, in
 }
 
 //colors the graph following the colorNode heuristic. returns -1 if was not able to construct following the heuristic
-int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights){
+int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int* adjacentNodeQuantity){
 
     for (int i = 0; i < colorCount; i++)
     {
@@ -119,7 +109,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, in
         for (int i = 0; i < nodeCount; i++)
         {
             if(toColorAdjacentNodes[i]){
-                error = colorAdjacentNodes(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, i);
+                error = colorAdjacentNodes(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, i, adjacentNodeQuantity[i]);
                 if(error == -1){
                     break;
                 }

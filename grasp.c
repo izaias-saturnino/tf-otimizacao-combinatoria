@@ -1,13 +1,13 @@
 #include "greedy.h"
 
-int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration){
+int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* adjacentNodeQuantity){
     int totalColorWeights[colorCount];
     int maxValueInit = 0;
     int maxValue = 0;
 
     int error = -1;
     while(error == -1){
-        error = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights);
+        error = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeQuantity);
     }
 
     for(int i = 0; i < colorCount; i++){
