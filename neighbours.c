@@ -36,6 +36,14 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
     *firstColor = 0;
     *secondColor = 1;
     *maxColor = -1;
+
+    int bestFirstNodeIterator = -1;
+    int bestSecondNodeIterator = -1;
+    int bestFirstNodeColorIterator = -1;
+    int bestSecondNodeColorIterator = -1;
+
+    int totalColorWeightsCopy[colorCount];
+
     for(int firstNodeIterator = 0; firstNodeIterator < nodeCount; firstNodeIterator++){
         int firstNodeAvaliableColors[colorCount];
         getAvaliableColors(nodeAjacencyList, coloration, nodeCount, colorCount, firstNodeIterator, firstNodeAvaliableColors);
@@ -63,7 +71,7 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
                                 continue;
                             }
                             int newMaxColor = -1;
-                            int totalColorWeightsCopy[colorCount];
+
                             {
                                 int firstNodeCurrentColor = coloration[firstNodeIterator];
                                 int secondNodeCurrentColor = coloration[secondNodeIterator];
@@ -74,7 +82,9 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
                                 totalColorWeightsCopy[secondNodeCurrentColor] = totalColorWeights[secondNodeCurrentColor];
                                 totalColorWeightsCopy[secondNodeColorIterator] = totalColorWeights[secondNodeColorIterator];
                             }
+
                             int newValue = getColorChangesValue(coloration, firstNodeColorIterator, secondNodeColorIterator, firstNodeIterator, secondNodeIterator, totalColorWeightsCopy, maxColorValue, weights, colorCount, newMaxColor);
+                            
                             if(newValue < maxColorValue){
                                 *firstNode = firstNodeIterator;
                                 *secondNode = secondNodeIterator;
@@ -83,16 +93,10 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
                                 maxColorValue = newValue;
                                 *maxColor = newMaxColor;
 
-                                {
-                                    int firstNodeCurrentColor = coloration[firstNodeIterator];
-                                    int secondNodeCurrentColor = coloration[secondNodeIterator];
-
-                                    totalColorWeights[firstNodeCurrentColor] = totalColorWeightsCopy[firstNodeCurrentColor];
-                                    totalColorWeights[firstNodeColorIterator] = totalColorWeightsCopy[firstNodeColorIterator];
-
-                                    totalColorWeights[secondNodeCurrentColor] = totalColorWeightsCopy[secondNodeCurrentColor];
-                                    totalColorWeights[secondNodeColorIterator] = totalColorWeightsCopy[secondNodeColorIterator];
-                                }
+                                bestFirstNodeIterator = firstNodeIterator;
+                                bestSecondNodeIterator = secondNodeIterator;
+                                bestFirstNodeColorIterator = firstNodeColorIterator;
+                                bestSecondNodeColorIterator = secondNodeColorIterator;
                             }
                         }
                     }
@@ -100,5 +104,17 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
             }
         }
     }
+
+    {
+        int firstNodeCurrentColor = coloration[bestFirstNodeIterator];
+        int secondNodeCurrentColor = coloration[bestSecondNodeIterator];
+
+        totalColorWeights[firstNodeCurrentColor] = totalColorWeightsCopy[firstNodeCurrentColor];
+        totalColorWeights[bestFirstNodeColorIterator] = totalColorWeightsCopy[bestFirstNodeColorIterator];
+
+        totalColorWeights[secondNodeCurrentColor] = totalColorWeightsCopy[secondNodeCurrentColor];
+        totalColorWeights[bestSecondNodeColorIterator] = totalColorWeightsCopy[bestSecondNodeColorIterator];
+    }
+
     return maxColorValue;
 }

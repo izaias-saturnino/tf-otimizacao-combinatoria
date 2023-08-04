@@ -33,7 +33,7 @@ int colorAdjacentNodes(int nodeCount, int colorCount, int** nodeAjacencyList, in
     return color;
 }
 
-//colors the graph following the colorNode heuristic. returns 0 if was not able to construct following the heuristic
+//colors the graph following the colorNode heuristic. returns -1 if was not able to construct following the heuristic
 int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights){
 
     for (int i = 0; i < colorCount; i++)
