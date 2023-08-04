@@ -17,6 +17,27 @@ int colorNode(int nodeCount, int colorCount, int** nodeAjacencyList, int* weight
 int colorAdjacentNodes(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int node){
     int color = 0;
     int i = node;
+
+    int adjacentNodesCount = 0;
+
+    for(int j = 0; j < nodeCount; j++){
+        int currentNode = nodeAjacencyList[i][j];
+        if(currentNode == -1){
+            adjacentNodesCount++;
+            break;
+        }
+    }
+
+    int firstAdjacentNodePos = rand() % adjacentNodesCount;
+
+    int firstAdjacentNode = nodeAjacencyList[i][firstAdjacentNodePos];
+
+    color = colorNode(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, firstAdjacentNode);
+
+    if(color == -1){
+        return color;
+    }
+
     for(int j = 0; j < nodeCount; j++){
         int currentNode = nodeAjacencyList[i][j];
         if(currentNode == -1){
