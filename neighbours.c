@@ -18,10 +18,11 @@ int getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeN
             *maxColor = i;
         }
     }
+    return maxColorValue;
 }
 
 //Changes the values of firstNode, secondNode, firstColor, secondColor to the values of the best neighbour for the current graph. Returns the new maxColorValue
-int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int* totalColorWeights, int* coloration, int maxColorValue, int* weights, int* firstNode, int* secondNode, int* firstColor, int* secondColor){
+int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int* totalColorWeights, int* coloration, int maxColorValue, int* weights, int* firstNode, int* secondNode, int* firstColor, int* secondColor, int* maxColor){
     if(colorCount < 3){
         //TODO
         return;
@@ -34,7 +35,7 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
     *secondNode = 1;
     *firstColor = 0;
     *secondColor = 1;
-    int maxColor = -1;
+    *maxColor = -1;
     for(int firstNodeIterator = 0; firstNodeIterator < nodeCount; firstNodeIterator++){
         int firstNodeAvaliableColors[colorCount];
         getAvaliableColors(nodeAjacencyList, coloration, nodeCount, colorCount, firstNodeIterator, firstNodeAvaliableColors);
@@ -57,18 +58,41 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
                     
                     if(!firstNodeAvaliableColors[firstNodeColorIterator]){
                         if(!secondNodeAvaliableColors[secondNodeColorIterator]){
-                            if(firstNodeColorIterator != maxColor && secondNodeColorIterator != maxColor && maxColor != -1){
+                            int maxColorCopy = *maxColor;
+                            if(firstNodeColorIterator != maxColorCopy && secondNodeColorIterator != maxColorCopy && maxColorCopy != -1){
                                 continue;
                             }
                             int newMaxColor = -1;
-                            int newValue = getColorChangesValue(coloration, firstNodeColorIterator, secondNodeColorIterator, firstNodeIterator, secondNodeIterator, totalColorWeights, maxColorValue, weights, colorCount, newMaxColor);
+                            int totalColorWeightsCopy[colorCount];
+                            {
+                                int firstNodeCurrentColor = coloration[firstNodeIterator];
+                                int secondNodeCurrentColor = coloration[secondNodeIterator];
+
+                                totalColorWeightsCopy[firstNodeCurrentColor] = totalColorWeights[firstNodeCurrentColor];
+                                totalColorWeightsCopy[firstNodeColorIterator] = totalColorWeights[firstNodeColorIterator];
+
+                                totalColorWeightsCopy[secondNodeCurrentColor] = totalColorWeights[secondNodeCurrentColor];
+                                totalColorWeightsCopy[secondNodeColorIterator] = totalColorWeights[secondNodeColorIterator];
+                            }
+                            int newValue = getColorChangesValue(coloration, firstNodeColorIterator, secondNodeColorIterator, firstNodeIterator, secondNodeIterator, totalColorWeightsCopy, maxColorValue, weights, colorCount, newMaxColor);
                             if(newValue < maxColorValue){
                                 *firstNode = firstNodeIterator;
                                 *secondNode = secondNodeIterator;
                                 *firstColor = firstNodeColorIterator;
                                 *secondColor = secondNodeColorIterator;
                                 maxColorValue = newValue;
-                                maxColor = newMaxColor;
+                                *maxColor = newMaxColor;
+
+                                {
+                                    int firstNodeCurrentColor = coloration[firstNodeIterator];
+                                    int secondNodeCurrentColor = coloration[secondNodeIterator];
+
+                                    totalColorWeights[firstNodeCurrentColor] = totalColorWeightsCopy[firstNodeCurrentColor];
+                                    totalColorWeights[firstNodeColorIterator] = totalColorWeightsCopy[firstNodeColorIterator];
+
+                                    totalColorWeights[secondNodeCurrentColor] = totalColorWeightsCopy[secondNodeCurrentColor];
+                                    totalColorWeights[secondNodeColorIterator] = totalColorWeightsCopy[secondNodeColorIterator];
+                                }
                             }
                         }
                     }
