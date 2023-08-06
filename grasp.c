@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "neighbours.h"
 
-int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* adjacentNodeListLength){
+int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* adjacentNodeListLength, int** nodeAjacencyMatrix){
     int totalColorWeights[colorCount];
     bool maxValueInit = false;
     int maxValue = 0;
@@ -41,7 +41,7 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, i
 
     while(maxValue != newMaxValue){
         newMaxValue = maxValue;
-        newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, avaliableColors);
+        newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, avaliableColors, nodeAjacencyMatrix);
     }
 
     return maxValue;

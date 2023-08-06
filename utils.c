@@ -43,22 +43,6 @@ void getEmptyColoration(int nodeCount, int* coloration){
     }
 }
 
-bool areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int nodeCount){
-    int i = firstNode;
-    bool areAdjacent = false;
-    for(int j = 0; j < nodeCount; j++){
-        int currentNode = nodeAjacencyList[i][j];
-        if(currentNode == END_OF_LIST){
-            break;
-        }
-        if(currentNode == secondNode){
-            areAdjacent = true;
-            break;
-        }
-    }
-    return areAdjacent;
-}
-
 void updateNodeColor(int** avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node){
     for(int adjacentNodeIndex = 0; adjacentNodeIndex < nodeCount; adjacentNodeIndex++){
         int adjacentNode = nodeAjacencyList[node][adjacentNodeIndex];

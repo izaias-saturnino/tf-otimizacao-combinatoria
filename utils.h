@@ -29,9 +29,6 @@ int* getLowestAndHighestAvaliableColor(int* totalColorWeights, int* avaliableCol
 //changes the value of coloration to an array full of UNDEFINED values
 void getEmptyColoration(int nodeCount, int* coloration);
 
-//returns true if nodes are adjacent
-int areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int nodeCount);
-
 //changes the color of the node and changes the avaliableColors matrix for consistency
 void updateNodeColor(int** avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node);
 
