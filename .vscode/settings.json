@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "utils.h": "c",
-        "neighbours.h": "c",
-        "time.h": "c",
-        "stdlib.h": "c",
-        "greedy.h": "c"
-    }
-}
