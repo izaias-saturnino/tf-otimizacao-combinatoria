@@ -1,5 +1,6 @@
 #include "greedy.h"
 #include "utils.h"
+#include "neighbours.h"
 
 int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* adjacentNodeQuantity){
     int totalColorWeights[colorCount];
@@ -34,19 +35,13 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, i
 
     int newMaxValue = maxValue + 1;
 
-    int firstNode;
-    int secondNode;
-    int firstColor;
-    int secondColor;
-    int maxColor;
-
     if(!maxValueInit){
         printf("ERROR: expected value for maxValueInit: true\n");
     }
 
     while(maxValue != newMaxValue){
         newMaxValue = maxValue;
-        newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, &firstNode, &secondNode, &firstColor, &secondColor, &maxColor);
+        newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, avaliableColors);
     }
 
     return maxValue;

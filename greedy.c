@@ -3,21 +3,13 @@
 #include "utils.h"
 #include "greedy.h"
 
-int colorNode(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int node, int** avaliableColors){
+int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int node, int** avaliableColors){
     if(coloration[node] != UNDEFINED){
         return coloration[node];
     }
     int* nodeAvaliableColors = avaliableColors[node];
     int nodeBestColor = getLowestAvaliableColor(totalColorWeights, nodeAvaliableColors, colorCount);
-    for(int firstNode = 0; firstNode < nodeCount; firstNode++){
-        for(int secondNode = 0; secondNode < nodeCount; secondNode++){
-            if(nodeAjacencyList[firstNode][secondNode] == UNDEFINED){
-                break;
-            }
-            int secondNodeColor = coloration[secondNode];
-            avaliableColors[firstNode][secondNodeColor]++;
-        }
-    }
+
     return nodeBestColor;
 }
 
@@ -28,7 +20,7 @@ int colorAdjacentNodes(int nodeCount, int colorCount, int** nodeAjacencyList, in
 
     int firstAdjacentNode = nodeAjacencyList[i][firstAdjacentNodePos];
 
-    int color = colorNode(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, firstAdjacentNode, avaliableColors);
+    int color = getNodeBestStepColor(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, firstAdjacentNode, avaliableColors);
 
     if(color == UNDEFINED){
         return color;
@@ -39,7 +31,11 @@ int colorAdjacentNodes(int nodeCount, int colorCount, int** nodeAjacencyList, in
         if(currentNode == END_OF_LIST){
             break;
         }
-        color = colorNode(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, currentNode, avaliableColors);
+        color = getNodeBestStepColor(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, currentNode, avaliableColors);
+
+        updateNodeAvaliableColors(avaliableColors, nodeCount, coloration, nodeAjacencyList, color, node);
+        coloration[node] = color;
+
         if(color == UNDEFINED){
             break;
         }
@@ -102,6 +98,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, in
                 
                 int color = getLowestColor(totalColorWeights, colorCount);
 
+                updateNodeAvaliableColors(avaliableColors, nodeCount, coloration, nodeAjacencyList, color, node);
                 coloration[node] = color;
                 totalColorWeights[color] += weights[node];
 

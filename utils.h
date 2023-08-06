@@ -26,13 +26,16 @@ int getHighestAvaliableColor(int* totalColorWeights, int* avaliableColors);
 //returns array with lowest and highest avaliable color in terms of total weight
 int* getLowestAndHighestAvaliableColor(int* totalColorWeights, int* avaliableColors);
 
-//changes the value of nodeAjancencyList to have a list of ajacent nodes for each node. Each list of ajacent nodes is terminated by END_OF_LIST
-void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weights, int* coloration, int** nodeAjacencyList, int* lastAdjacentNodePos);
+//changes the values of nodeAjancencyList to have a list of ajacent nodes for each node. Each list of ajacent nodes is terminated by END_OF_LIST. also changes the values of adjacentNodeListLength to indicate the length of each list
+void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weights, int* coloration, int** nodeAjacencyList, int* adjacentNodeListLength);
 
 //changes the value of coloration to an array full of UNDEFINED values
 void getEmptyColoration(int nodeCount, int* coloration);
 
 //returns true if nodes are adjacent
 int areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int nodeCount);
+
+//changes the avaliableColors matrix after a recoloration for data structure consistency
+void updateNodeAvaliableColors(int** avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node);
 
 #endif /* _UTILS_H_ */

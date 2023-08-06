@@ -36,26 +36,26 @@ int getLowestAvaliableColor(int* totalColorWeights, int* avaliableColors, int co
     return lowestAvaliableColor;
 }
 
-void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weights, int* coloration, int** nodeAjacencyList, int* lastAdjacentNodePos){
+void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weights, int* coloration, int** nodeAjacencyList, int* adjacentNodeListLength){
     for (int i = 0; i < nodeCount; i++)
     {
-        lastAdjacentNodePos[i] = 0;
+        adjacentNodeListLength[i] = 0;
     }
     for (int i = 0; i < nodeCount; i++)
     {
         int firstNode = graph[i][0];
         int secondNode = graph[i][1];
 
-        nodeAjacencyList[firstNode][lastAdjacentNodePos[firstNode]] = secondNode;
-        lastAdjacentNodePos[firstNode]++;
+        nodeAjacencyList[firstNode][adjacentNodeListLength[firstNode]] = secondNode;
+        adjacentNodeListLength[firstNode]++;
 
-        nodeAjacencyList[secondNode][lastAdjacentNodePos[secondNode]] = firstNode;
-        lastAdjacentNodePos[secondNode]++;
+        nodeAjacencyList[secondNode][adjacentNodeListLength[secondNode]] = firstNode;
+        adjacentNodeListLength[secondNode]++;
     }
     for (int i = 0; i < nodeCount; i++)
     {
-        if(lastAdjacentNodePos[i] < nodeCount){
-            nodeAjacencyList[i][lastAdjacentNodePos[i]] = END_OF_LIST;
+        if(adjacentNodeListLength[i] < nodeCount){
+            nodeAjacencyList[i][adjacentNodeListLength[i]] = END_OF_LIST;
         }
     }
 }
@@ -80,4 +80,18 @@ bool areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int
         }
     }
     return areAdjacent;
+}
+
+void updateNodeAvaliableColors(int** avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node){
+    for(int adjacentNodeIndex = 0; adjacentNodeIndex < nodeCount; adjacentNodeIndex++){
+        int adjacentNode = nodeAjacencyList[node][adjacentNodeIndex];
+        if(adjacentNode == END_OF_LIST){
+            break;
+        }
+        int firstNodeColor = coloration[node];
+        if(firstNodeColor != UNDEFINED){
+            avaliableColors[adjacentNode][firstNodeColor]--;
+        }
+        avaliableColors[adjacentNode][nodeBestColor]++;
+    }
 }
