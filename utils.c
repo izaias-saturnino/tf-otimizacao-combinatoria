@@ -82,7 +82,7 @@ bool areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int
     return areAdjacent;
 }
 
-void updateNodeAvaliableColors(int** avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node){
+void updateNodeColor(int** avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node){
     for(int adjacentNodeIndex = 0; adjacentNodeIndex < nodeCount; adjacentNodeIndex++){
         int adjacentNode = nodeAjacencyList[node][adjacentNodeIndex];
         if(adjacentNode == END_OF_LIST){
@@ -94,4 +94,5 @@ void updateNodeAvaliableColors(int** avaliableColors, int nodeCount, int* colora
         }
         avaliableColors[adjacentNode][nodeBestColor]++;
     }
+    coloration[node] = nodeBestColor;
 }
