@@ -32,9 +32,6 @@ void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weig
 //changes the value of coloration to an array full of UNDEFINED values
 void getEmptyColoration(int nodeCount, int* coloration);
 
-//changes the value of avaliableColors to an array with the avaliableColors. The array position is equal to the number of adjacent nodes with the same color as the array position
-void getAvaliableColors(int** nodeAjacencyList, int* coloration, int nodeCount, int colorCount, int node, int* avaliableColors);
-
 //returns true if nodes are adjacent
 int areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int nodeCount);
 

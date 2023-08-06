@@ -6,9 +6,20 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, i
     bool maxValueInit = false;
     int maxValue = 0;
 
+    //The cell[node][color] is equal to the number of adjacent nodes with the same color
+    int avaliableColors[nodeCount][colorCount];
+
+    for (int i = 0; i < nodeCount; i++)
+    {
+        for (int j = 0; j < colorCount; j++)
+        {
+            avaliableColors[i][j] = 0;
+        }
+    }
+
     int returnValue = UNDEFINED;
     while(returnValue == UNDEFINED){
-        returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeQuantity);
+        returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeQuantity, avaliableColors);
     }
 
     for(int i = 0; i < colorCount; i++){

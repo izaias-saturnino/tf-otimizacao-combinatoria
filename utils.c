@@ -66,25 +66,6 @@ void getEmptyColoration(int nodeCount, int* coloration){
     }
 }
 
-void getAvaliableColors(int** nodeAjacencyList, int* coloration, int nodeCount, int colorCount, int node, int* avaliableColors){
-    
-    for (int i = 0; i < colorCount; i++)
-    {
-        avaliableColors[i] = 0;
-    }
-    
-    for(int i = 0; i < nodeCount; i++){
-        for(int j = 0; j < nodeCount; j++){
-            if(nodeAjacencyList[i][j] == END_OF_LIST){
-                break;
-            }
-            int currentNode = nodeAjacencyList[i][j];
-            int currentColor = coloration[currentNode];
-            avaliableColors[currentColor]++;
-        }
-    }
-}
-
 bool areNodesAdjacent(int firstNode, int secondNode, int** nodeAjacencyList, int nodeCount){
     int i = firstNode;
     bool areAdjacent = false;
