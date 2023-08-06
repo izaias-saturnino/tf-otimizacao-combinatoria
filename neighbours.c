@@ -59,8 +59,8 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
                         secondNodeAvaliableColors[firstNodeColorIterator] -= 1;
                     }
                     
-                    if(!firstNodeAvaliableColors[firstNodeColorIterator]){
-                        if(!secondNodeAvaliableColors[secondNodeColorIterator]){
+                    if(firstNodeAvaliableColors[firstNodeColorIterator] == 0){
+                        if(secondNodeAvaliableColors[secondNodeColorIterator] == 0){
                             if(firstNodeColorIterator != maxColor && secondNodeColorIterator != maxColor && maxColor != UNDEFINED){
                                 continue;
                             }

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "utils.h"
 
 int getLowestColor(int* totalColorWeights, int colorCount){
@@ -22,7 +23,7 @@ int getLowestAvaliableColor(int* totalColorWeights, int* avaliableColors, int co
     int lowestTotalColorWeights = 0;
     for (int i = 0; i < colorCount; i++)
     {
-        if(!avaliableColors[i]){
+        if(avaliableColors[i] == 0){
             if(lowestAvaliableColor == UNDEFINED){
                 lowestAvaliableColor = i;
                 lowestTotalColorWeights = totalColorWeights[i];
@@ -34,30 +35,6 @@ int getLowestAvaliableColor(int* totalColorWeights, int* avaliableColors, int co
         }
     }
     return lowestAvaliableColor;
-}
-
-void getNodesAjancencyList(int nodeCount, int colorCount, int** graph, int* weights, int* coloration, int** nodeAjacencyList, int* adjacentNodeListLength){
-    for (int i = 0; i < nodeCount; i++)
-    {
-        adjacentNodeListLength[i] = 0;
-    }
-    for (int i = 0; i < nodeCount; i++)
-    {
-        int firstNode = graph[i][0];
-        int secondNode = graph[i][1];
-
-        nodeAjacencyList[firstNode][adjacentNodeListLength[firstNode]] = secondNode;
-        adjacentNodeListLength[firstNode]++;
-
-        nodeAjacencyList[secondNode][adjacentNodeListLength[secondNode]] = firstNode;
-        adjacentNodeListLength[secondNode]++;
-    }
-    for (int i = 0; i < nodeCount; i++)
-    {
-        if(adjacentNodeListLength[i] < nodeCount){
-            nodeAjacencyList[i][adjacentNodeListLength[i]] = END_OF_LIST;
-        }
-    }
 }
 
 void getEmptyColoration(int nodeCount, int* coloration){

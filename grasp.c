@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "neighbours.h"
 
-int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* adjacentNodeQuantity){
+int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* adjacentNodeListLength){
     int totalColorWeights[colorCount];
     bool maxValueInit = false;
     int maxValue = 0;
@@ -20,7 +20,7 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, i
 
     int returnValue = UNDEFINED;
     while(returnValue == UNDEFINED){
-        returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeQuantity, avaliableColors);
+        returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeListLength, avaliableColors);
     }
 
     for(int i = 0; i < colorCount; i++){
