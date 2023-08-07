@@ -77,7 +77,7 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
                                 totalColorWeightsCopy[secondNodeColorIterator] = totalColorWeights[secondNodeColorIterator];
                             }
 
-                            int newValue = getColorChangesValue(coloration, firstNodeColorIterator, secondNodeColorIterator, firstNodeIterator, secondNodeIterator, totalColorWeightsCopy, maxColorValue, weights, colorCount, newMaxColor);
+                            int newValue = getColorChangesValue(coloration, firstNodeColorIterator, secondNodeColorIterator, firstNodeIterator, secondNodeIterator, totalColorWeightsCopy, maxColorValue, weights, colorCount, &newMaxColor);
                             
                             if(newValue < maxColorValue){
                                 maxColorValue = newValue;

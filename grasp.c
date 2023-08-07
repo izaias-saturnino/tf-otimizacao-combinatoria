@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include "grasp.h"
 #include "greedy.h"
 #include "utils.h"
 #include "neighbours.h"
