@@ -111,7 +111,10 @@ int main (int argc, char **argv)
 
     printf("%f", maxValue);
 
-    //TODO print coloration
-
+    for (int i = 0; i < nodeCount; i++)
+    {
+        printf("node: %d, color: %d\n", i, maxColorationPointer[i]);
+    }
+    
     return 0;
 }
