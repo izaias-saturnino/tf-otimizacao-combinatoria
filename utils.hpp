@@ -3,8 +3,11 @@
 
 #define UNDEFINED -1
 
+#include <iostream>
+#include <stdio.h>
 #include <tuple>
 #include <functional>
+#include <unordered_set>
 
 using namespace std;
 

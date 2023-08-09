@@ -1,6 +1,8 @@
 #ifndef _GREEDY_H_
 #define _GREEDY_H_
 
+#include <queue>
+
 struct ComparePairs {
     bool operator()(const pair<pair<int, int>, int>& p1, const pair<pair<int, int>, int>& p2) {
         if (p1.first.first != p2.first.first) {

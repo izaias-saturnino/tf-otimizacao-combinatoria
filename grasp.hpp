@@ -1,7 +1,6 @@
 #ifndef _GRASP_H_
 #define _GRASP_H_
 
-#include <unordered_set>
 #include "utils.hpp"
 
 //returns the max value after one iteration of the grasp meta heuristic. changes the value of the coloration array to the local minimum values

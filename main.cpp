@@ -1,7 +1,4 @@
-#include <stdio.h>
 #include <time.h>
-#include <iostream>
-#include <unordered_set>
 #include "utils.hpp"
 #include "grasp.hpp"
 

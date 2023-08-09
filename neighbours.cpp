@@ -1,4 +1,3 @@
-#include <unordered_set>
 #include "neighbours.hpp"
 #include "utils.hpp"
 

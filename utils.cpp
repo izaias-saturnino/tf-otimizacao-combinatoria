@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "utils.hpp"
 
 int getLowestColor(int* totalColorWeights, int colorCount){

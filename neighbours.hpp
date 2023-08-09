@@ -1,7 +1,6 @@
 #ifndef _NEIGHBOURS_H_
 #define _NEIGHBOURS_H_
 
-#include <unordered_set>
 #include "utils.hpp"
 
 //returns the max color value of one neighbour

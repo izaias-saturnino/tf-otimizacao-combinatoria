@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <unordered_set>
 #include "grasp.hpp"
 #include "greedy.hpp"
 #include "utils.hpp"
@@ -40,7 +38,7 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights,
     int newMaxValue = maxValue + 1;
 
     if(!maxValueInit){
-        printf("ERROR: expected value for maxValueInit: true\n");
+        cout << "ERROR: expected value for maxValueInit: true\n";
     }
 
     while(maxValue != newMaxValue){
