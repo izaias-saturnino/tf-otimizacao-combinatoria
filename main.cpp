@@ -25,13 +25,13 @@ int main() {
     }
 
     //creating hash for edges
-    const std::size_t expectedNumElements = edgeCount*2; // Set your expected number of elements
+    const size_t expectedNumElements = edgeCount*2; // Set your expected number of elements
 
     // Calculate an appropriate initial capacity based on expectedNumElements
-    const std::size_t initialCapacity = std::max(static_cast<std::size_t>(expectedNumElements / 0.7), static_cast<std::size_t>(10));
+    const size_t initialCapacity = max(static_cast<size_t>(expectedNumElements / 0.7), static_cast<size_t>(10));
 
     // An unordered_set with custom hash function and initial capacity
-    std::unordered_set<std::pair<int, int>, TupleHash> adjacencyHash(initialCapacity);
+    unordered_set<pair<int, int>, TupleHash> adjacencyHash(initialCapacity);
 
     //creaating list for edges
     int adjacentNodeListLength[nodeCount] = {0};
@@ -68,8 +68,8 @@ int main() {
         int firstNode = edges[i][0];
         int secondNode = edges[i][1];
 
-        adjacencyHash.insert(std::make_pair(firstNode, secondNode));
-        adjacencyHash.insert(std::make_pair(secondNode, firstNode));
+        adjacencyHash.insert(make_pair(firstNode, secondNode));
+        adjacencyHash.insert(make_pair(secondNode, firstNode));
 
         //filling the nodeAjacencyList with the edges
         nodeAjacencyList[firstNode][adjacentNodeListInit[firstNode]] = secondNode;

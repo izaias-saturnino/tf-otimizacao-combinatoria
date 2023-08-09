@@ -6,11 +6,13 @@
 #include <tuple>
 #include <functional>
 
+using namespace std;
+
 struct TupleHash {
     template <typename T, typename U>
-    std::size_t operator()(const std::pair<T, U>& p) const {
-        std::size_t h1 = std::hash<T>{}(p.first);
-        std::size_t h2 = std::hash<U>{}(p.second);
+    size_t operator()(const pair<T, U>& p) const {
+        size_t h1 = hash<T>{}(p.first);
+        size_t h2 = hash<U>{}(p.second);
         return h1 ^ (h2 << 1);
     }
 };

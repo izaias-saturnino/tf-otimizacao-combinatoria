@@ -44,6 +44,9 @@ void getEmptyColoration(int nodeCount, int* coloration){
 }
 
 void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount){
+    if(nodeBestColor == UNDEFINED){
+        return;
+    }
     for(int adjacentNodeIndex = 0; adjacentNodeIndex < adjacentNodesCount; adjacentNodeIndex++){
         int adjacentNode = nodeAjacencyList[node][adjacentNodeIndex];
 

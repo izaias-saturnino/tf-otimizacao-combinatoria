@@ -5,7 +5,7 @@
 #include "utils.hpp"
 #include "neighbours.hpp"
 
-int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, std::unordered_set<std::pair<int, int>, TupleHash>* adjacencyHash){
+int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash){
     int totalColorWeights[colorCount];
     bool maxValueInit = false;
     int maxValue = 0;
