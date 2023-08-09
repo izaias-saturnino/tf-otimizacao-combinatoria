@@ -44,7 +44,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, fl
 
     while(totalColoredNodes < nodeCount){
 
-        int randomNodeIndex = rand() % colorCount-totalColoredNodes;
+        int randomNodeIndex = rand() % (nodeCount-totalColoredNodes);
 
         int randomNode = UNDEFINED;
 
