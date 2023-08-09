@@ -1,7 +1,8 @@
+#include <unordered_set>
 #include "neighbours.hpp"
 #include "utils.hpp"
 
-int getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeNewColor, int firstNode, int secondNode, int* totalColorWeights, int maxColorValue, int* weights, int colorCount, int* maxColor){
+int getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeNewColor, int firstNode, int secondNode, int* totalColorWeights, int maxColorValue, float* weights, int colorCount, int* maxColor){
 
     int firstNodeCurrentColor = coloration[firstNode];
     int secondNodeCurrentColor = coloration[secondNode];
@@ -23,7 +24,7 @@ int getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeN
     return maxColorValue;
 }
 
-int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int* totalColorWeights, int* coloration, int maxColorValue, int* weights, int** avaliableColors, int** nodeAjacencyMatrix){
+int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int* totalColorWeights, int* coloration, int maxColorValue, float* weights, int* avaliableColors, std::unordered_set<std::pair<int, int>, TupleHash>* adjacencyHash, int* adjacentNodeQuantity){
     if(colorCount == 1){
         return maxColorValue;
     }
@@ -42,11 +43,12 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
     int totalColorWeightsCopy[colorCount];
 
     for(int firstNodeIterator = 0; firstNodeIterator < nodeCount; firstNodeIterator++){
-        int* firstNodeAvaliableColors = avaliableColors[firstNodeIterator];
+        int* firstNodeAvaliableColors = &avaliableColors[firstNodeIterator*colorCount];
         for(int secondNodeIterator = 0; secondNodeIterator < nodeCount; secondNodeIterator++){
-            int* secondNodeAvaliableColors = avaliableColors[secondNodeIterator];
+            int* secondNodeAvaliableColors = &avaliableColors[secondNodeIterator*colorCount];
             
-            bool nodes_adjacent = nodeAjacencyMatrix[firstNodeIterator][secondNodeIterator];
+            auto pair = std::make_pair(firstNodeIterator,secondNodeIterator);
+            bool nodes_adjacent = (*adjacencyHash).find(pair) != (*adjacencyHash).end();
             
             for(int firstNodeColorIterator = 0; firstNodeColorIterator < colorCount; firstNodeColorIterator++){
                 for(int secondNodeColorIterator = 0; secondNodeColorIterator < colorCount; secondNodeColorIterator++){
@@ -106,8 +108,8 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
         totalColorWeights[bestSecondNodeColorIterator] = totalColorWeightsCopy[bestSecondNodeColorIterator];
     }
 
-    updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestFirstNodeColorIterator, bestFirstNodeIterator);
-    updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestSecondNodeColorIterator, bestSecondNodeIterator);
+    updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestFirstNodeColorIterator, bestFirstNodeIterator, adjacentNodeQuantity[bestFirstNodeIterator], colorCount);
+    updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestSecondNodeColorIterator, bestSecondNodeIterator, adjacentNodeQuantity[bestSecondNodeIterator], colorCount);
 
     return maxColorValue;
 }

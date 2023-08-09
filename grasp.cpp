@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <unordered_set>
 #include "grasp.hpp"
 #include "greedy.hpp"
 #include "utils.hpp"
 #include "neighbours.hpp"
 
-int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* adjacentNodeListLength, int** nodeAjacencyMatrix){
+int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, std::unordered_set<std::pair<int, int>, TupleHash>* adjacencyHash){
     int totalColorWeights[colorCount];
     bool maxValueInit = false;
     int maxValue = 0;
@@ -22,7 +23,7 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, i
 
     int returnValue = UNDEFINED;
     while(returnValue == UNDEFINED){
-        returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeListLength, avaliableColors);
+        returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeListLength, &avaliableColors[0][0]);
     }
 
     for(int i = 0; i < colorCount; i++){
@@ -43,7 +44,7 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, i
 
     while(maxValue != newMaxValue){
         newMaxValue = maxValue;
-        newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, avaliableColors, nodeAjacencyMatrix);
+        newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength);
     }
 
     return maxValue;

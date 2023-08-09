@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <time.h>
+#include <iostream>
+#include <unordered_set>
 #include "utils.hpp"
 #include "grasp.hpp"
 
 #define TIMEOUT 10
 
-int main ()
-{
+int main() {
     //read instance
     int nodeCount = 0;
     int edgeCount = 0;
@@ -18,58 +19,68 @@ int main ()
 
     float weights[nodeCount];
 
+    //reading weights
     for(int i = 0; i < nodeCount; i++){
         scanf("%f", &weights[i]);
     }
 
-    printf("t0");
+    //creating hash for edges
+    const std::size_t expectedNumElements = edgeCount*2; // Set your expected number of elements
 
-    int adjacentNodeListLength[nodeCount];
-    int nodeAjacencyList[nodeCount][nodeCount];
-    int nodeAjacencyMatrix[nodeCount][nodeCount];
+    // Calculate an appropriate initial capacity based on expectedNumElements
+    const std::size_t initialCapacity = std::max(static_cast<std::size_t>(expectedNumElements / 0.7), static_cast<std::size_t>(10));
 
-    for (int i = 0; i < nodeCount; i++)
-    {
-        adjacentNodeListLength[i] = 0;
-    }
+    // An unordered_set with custom hash function and initial capacity
+    std::unordered_set<std::pair<int, int>, TupleHash> adjacencyHash(initialCapacity);
 
-    for (int i = 0; i < nodeCount; i++)
-    {
-        for (int j = 0; j < nodeCount; j++){
-            nodeAjacencyMatrix[i][j] = 0;
-        }
-    }
+    //creaating list for edges
+    int adjacentNodeListLength[nodeCount] = {0};
+    int adjacentNodeListInit[nodeCount] = {0};
+    int* nodeAjacencyList[nodeCount];
 
-    for (int i = 0; i < edgeCount; i++)
-    {
+    //reading edges
+    int edges[edgeCount][2];
+
+    for (int i = 0; i < edgeCount; i++){
         int firstNode;
         int secondNode;
         scanf("%d", &firstNode);
         scanf("%d", &secondNode);
 
-        nodeAjacencyList[firstNode][adjacentNodeListLength[firstNode]] = secondNode;
+        edges[i][0] = firstNode;
+        edges[i][1] = secondNode;
+
+        //updating edges number for each node
         adjacentNodeListLength[firstNode]++;
-
-        nodeAjacencyList[secondNode][adjacentNodeListLength[secondNode]] = firstNode;
         adjacentNodeListLength[secondNode]++;
-
-        nodeAjacencyMatrix[firstNode][secondNode] = 1;
-        nodeAjacencyMatrix[secondNode][firstNode] = 1;
     }
+
+    //creating array for each node to fill the nodeAjacencyLists with the adjacent nodes numbers
     for (int i = 0; i < nodeCount; i++)
     {
-        if(adjacentNodeListLength[i] < nodeCount){
-            nodeAjacencyList[i][adjacentNodeListLength[i]] = END_OF_LIST;
-        }
+        int nodeListLength = adjacentNodeListLength[i];
+        nodeAjacencyList[i] = new int[nodeListLength];
+    }
+
+    //filling the hash with the edges
+    for (int i = 0; i < edgeCount; i++)
+    {
+        int firstNode = edges[i][0];
+        int secondNode = edges[i][1];
+
+        adjacencyHash.insert(std::make_pair(firstNode, secondNode));
+        adjacencyHash.insert(std::make_pair(secondNode, firstNode));
+
+        //filling the nodeAjacencyList with the edges
+        nodeAjacencyList[firstNode][adjacentNodeListInit[firstNode]] = secondNode;
+        adjacentNodeListInit[firstNode]++;
+
+        nodeAjacencyList[secondNode][adjacentNodeListInit[secondNode]] = firstNode;
+        adjacentNodeListInit[secondNode]++;
     }
     //finish reading instance
 
-    int maxColoration[nodeCount];
-
-    for (int i = 0; i < nodeCount; i++)
-    {
-        maxColoration[i] = UNDEFINED;
-    }
+    int maxColoration[nodeCount] = {UNDEFINED};
 
     int currentColoration[nodeCount];
     int* maxColorationPointer = maxColoration;
@@ -85,6 +96,7 @@ int main ()
 
     while(!timeout){
 
+        //clear currentColorationPointer to reuse in GRASP
         for (int i = 0; i < nodeCount; i++)
         {
             currentColorationPointer[i] = UNDEFINED;
@@ -93,7 +105,7 @@ int main ()
         t_diff = clock() - t0;
         double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
 
-        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, nodeAjacencyMatrix);
+        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash);
 
         if(!maxValueInit){
             maxValue = newMaxValue;

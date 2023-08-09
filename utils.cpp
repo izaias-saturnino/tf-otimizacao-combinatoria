@@ -43,17 +43,15 @@ void getEmptyColoration(int nodeCount, int* coloration){
     }
 }
 
-void updateNodeColor(int** avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node){
-    for(int adjacentNodeIndex = 0; adjacentNodeIndex < nodeCount; adjacentNodeIndex++){
+void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount){
+    for(int adjacentNodeIndex = 0; adjacentNodeIndex < adjacentNodesCount; adjacentNodeIndex++){
         int adjacentNode = nodeAjacencyList[node][adjacentNodeIndex];
-        if(adjacentNode == END_OF_LIST){
-            break;
-        }
+
         int firstNodeColor = coloration[node];
         if(firstNodeColor != UNDEFINED){
-            avaliableColors[adjacentNode][firstNodeColor]--;
+            avaliableColors[adjacentNode*colorCount + firstNodeColor]--;
         }
-        avaliableColors[adjacentNode][nodeBestColor]++;
+        avaliableColors[adjacentNode*colorCount + nodeBestColor]++;
     }
     coloration[node] = nodeBestColor;
 }

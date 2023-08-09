@@ -2,7 +2,18 @@
 #define _UTILS_H_
 
 #define UNDEFINED -1
-#define END_OF_LIST -2
+
+#include <tuple>
+#include <functional>
+
+struct TupleHash {
+    template <typename T, typename U>
+    std::size_t operator()(const std::pair<T, U>& p) const {
+        std::size_t h1 = std::hash<T>{}(p.first);
+        std::size_t h2 = std::hash<U>{}(p.second);
+        return h1 ^ (h2 << 1);
+    }
+};
 
 //returns lowest color in terms of total weight
 int getLowestColor(int* totalColorWeights, int colorCount);
@@ -26,6 +37,6 @@ int* getLowestAndHighestAvaliableColor(int* totalColorWeights, int* avaliableCol
 void getEmptyColoration(int nodeCount, int* coloration);
 
 //changes the color of the node and changes the avaliableColors matrix for consistency
-void updateNodeColor(int** avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node);
+void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount);
 
 #endif /* _UTILS_H_ */
