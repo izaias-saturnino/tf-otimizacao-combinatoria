@@ -94,6 +94,8 @@ int main() {
     bool maxValueInit = false;
     float maxValue = 0;
 
+    srand(time(NULL));
+
     while(!timeout){
 
         //clear currentColorationPointer to reuse in GRASP

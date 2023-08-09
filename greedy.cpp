@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include "utils.hpp"
@@ -49,25 +50,13 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, fl
     {
         totalColorWeights[i] = 0;
     }
-    
-    srand(time(NULL));
 
-    bool toColorAdjacentNodes[nodeCount];
-
-    for (int i = 0; i < nodeCount; i++)
-    {
-        toColorAdjacentNodes[i] = false;
-    }
+    bool toColorAdjacentNodes[nodeCount] = {false};
 
     int firstNodeToColor = rand() % nodeCount;
     toColorAdjacentNodes[firstNodeToColor] = true;
 
-    bool coloredAdjacentNodes[nodeCount];
-
-    for (int i = 0; i < nodeCount; i++)
-    {
-        coloredAdjacentNodes[i] = false;
-    }
+    bool coloredAdjacentNodes[nodeCount] = {false};
 
     int totalColoredAdjacentNodes = 1;
     int oldTotalColoredAdjacentNodes = 0;
@@ -77,31 +66,33 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, fl
     while(totalColoredAdjacentNodes < nodeCount){
 
         if(totalColoredAdjacentNodes <= oldTotalColoredAdjacentNodes){
-            int nodesLeft = 0;
-
-            for (int i = 0; i < nodeCount; i++)
-            {
-                nodesLeft += toColorAdjacentNodes[i];
-            }
+            int nodesLeft = nodeCount - totalColoredAdjacentNodes;
             
-            if(nodesLeft == 0){
-                int node;
-                for (node = 0; node < nodeCount; node++)
-                {
-                    if(coloredAdjacentNodes[node] == false){
+            int newNodeToColorIndex = rand() % nodesLeft;
+
+            int newNodeToColor = UNDEFINED;
+
+            for(int i = 0; i < nodeCount; i++){
+                if(coloredAdjacentNodes[i] == 0){
+                    if(newNodeToColorIndex == 0){
+                        newNodeToColor = i;
                         break;
                     }
+                    newNodeToColorIndex--;
                 }
-                
-                int color = getLowestColor(totalColorWeights, colorCount);
-
-                updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, color, node, adjacentNodeQuantity[node], colorCount);
-                totalColorWeights[color] += weights[node];
-
-                toColorAdjacentNodes[node] = true;
             }
 
-            oldTotalColoredAdjacentNodes = totalColoredAdjacentNodes;
+            if(newNodeToColor == UNDEFINED){
+                printf("ERROR");
+                break;
+            }
+
+            int color = getLowestColor(totalColorWeights, colorCount);
+
+            updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, color, newNodeToColor, adjacentNodeQuantity[newNodeToColor], colorCount);
+            totalColorWeights[color] += weights[newNodeToColor];
+
+            toColorAdjacentNodes[newNodeToColor] = true;
         }
 
         for (int i = 0; i < nodeCount; i++)

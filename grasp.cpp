@@ -23,6 +23,7 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights,
 
     int returnValue = UNDEFINED;
     while(returnValue == UNDEFINED){
+        //remake greedy construction
         returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeListLength, &avaliableColors[0][0]);
     }
 
