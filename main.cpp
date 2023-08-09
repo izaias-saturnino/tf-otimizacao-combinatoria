@@ -2,8 +2,6 @@
 #include "utils.hpp"
 #include "grasp.hpp"
 
-#define TIMEOUT 10
-
 int main() {
     //read instance
     int nodeCount = 0;
