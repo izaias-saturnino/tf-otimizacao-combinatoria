@@ -1,10 +1,6 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
-#define bool int
-#define false 0
-#define true 1
-
 #define UNDEFINED -1
 #define END_OF_LIST -2
 

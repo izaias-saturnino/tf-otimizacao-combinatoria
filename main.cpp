@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <time.h>
-#include "utils.h"
-#include "grasp.h"
+#include "utils.hpp"
+#include "grasp.hpp"
 
 #define TIMEOUT 10
 
-int main (int argc, char **argv)
+int main ()
 {
     //read instance
     int nodeCount = 0;
@@ -21,6 +21,8 @@ int main (int argc, char **argv)
     for(int i = 0; i < nodeCount; i++){
         scanf("%f", &weights[i]);
     }
+
+    printf("t0");
 
     int adjacentNodeListLength[nodeCount];
     int nodeAjacencyList[nodeCount][nodeCount];

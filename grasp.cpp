@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "grasp.h"
-#include "greedy.h"
-#include "utils.h"
-#include "neighbours.h"
+#include "grasp.hpp"
+#include "greedy.hpp"
+#include "utils.hpp"
+#include "neighbours.hpp"
 
 int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* adjacentNodeListLength, int** nodeAjacencyMatrix){
     int totalColorWeights[colorCount];

@@ -1,7 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
-#include "utils.h"
-#include "greedy.h"
+#include "utils.hpp"
+#include "greedy.hpp"
 
 int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAjacencyList, int* weights, int* coloration, int* totalColorWeights, int node, int** avaliableColors){
     if(coloration[node] != UNDEFINED){

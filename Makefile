@@ -1,9 +1,9 @@
 compile:
-	gcc -g -c main.c neighbours.c utils.c grasp.c greedy.c
+	g++ -g -c main.cpp neighbours.cpp utils.cpp grasp.cpp greedy.cpp
 
 # Comando para linkar os arquivos compilados e gerar o executável
 link: compile
-	gcc -g -o cmb main.o neighbours.o utils.o grasp.o greedy.o -Wall
+	g++ -g -o cmb main.o neighbours.o utils.o grasp.o greedy.o -Wall
 
 # Comando para limpar os arquivos gerados
 	rm -f main.o neighbours.o utils.o grasp.o greedy.o

@@ -1,5 +1,5 @@
-#include "neighbours.h"
-#include "utils.h"
+#include "neighbours.hpp"
+#include "utils.hpp"
 
 int getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeNewColor, int firstNode, int secondNode, int* totalColorWeights, int maxColorValue, int* weights, int colorCount, int* maxColor){
 

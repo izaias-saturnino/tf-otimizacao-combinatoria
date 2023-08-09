@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "utils.h"
+#include "utils.hpp"
 
 int getLowestColor(int* totalColorWeights, int colorCount){
     int lowestAvaliableColor = UNDEFINED;

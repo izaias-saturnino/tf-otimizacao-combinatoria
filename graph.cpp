@@ -1,7 +1,7 @@
 #define NUMBER_OF_VERTEXS 10
-#include <stdlib.h>
-#include <stdio.h>
-#include "graph.h"
+#include <stdlib.hpp>
+#include <stdio.hpp>
+#include "graph.hpp"
 
 Graph graph_allocate_memory(int num_vertexs)
 {
