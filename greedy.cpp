@@ -2,7 +2,7 @@
 #include "utils.hpp"
 #include "greedy.hpp"
 
-int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, int* totalColorWeights, int node, int* avaliableColors){
+int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int node, int* avaliableColors){
     if(coloration[node] != UNDEFINED){
         return coloration[node];
     }
@@ -17,7 +17,9 @@ int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAdjacencyList,
     return nodeBestColor;
 }
 
-int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, int* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors){
+int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors){
+
+    cout << "start of greedyConstruction\n";
 
     for (int i = 0; i < colorCount; i++)
     {
@@ -76,21 +78,8 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             //select one of the best nodes
             pair<pair<int, int>, int> top_item = orderedNodes.top();
 
-            while (!orderedNodes.empty() && coloredNodes[top_item.second]){
-                orderedNodes.pop();
-                if (coloredNodes[orderedNodes.top().second])
-                {
-                    top_item = orderedNodes.top();
-                }
-            }
-
-            if (coloredNodes[top_item.second]){
-                break;
-            }
-
-            //restart random coloration of node if a new connected component has been reached
-            if(top_item.first.first == colorCount){
-                break;
+            if(coloredNodes[top_item.second]){
+                continue;
             }
 
             orderedNodes.pop();
@@ -144,10 +133,12 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             //recolor starting from startNode
 
             //remove this error code and the break if using the recoloration above
-            printf("ERROR: expected valid coloration\n");
+            //printf("ERROR: expected valid coloration\n");
             break;
         }
     }
+
+    cout << "end of greedyConstruction\n";
 
     return returnValue;
 }

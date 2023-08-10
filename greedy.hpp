@@ -14,9 +14,9 @@ struct ComparePairs {
 };
 
 //selects the node coloration with the lowest maxValue in this step. Returns the selected color if coloring was possible and UNDEFINED if it was not. updates the avaliableColors matrix
-int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* totalColorWeights, int node, int* avaliableColors);
+int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, float* totalColorWeights, int node, int* avaliableColors);
 
 //colors the graph following the getNodeBestStepColor() heuristic. returns UNDEFINED if was not able to construct following the heuristic
-int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors);
+int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors);
 
 #endif /* _GREEDY_H_ */

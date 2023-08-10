@@ -3,10 +3,10 @@
 #include "utils.hpp"
 #include "neighbours.hpp"
 
-int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash){
-    int totalColorWeights[colorCount];
+float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash){
+    float totalColorWeights[colorCount];
     bool maxValueInit = false;
-    int maxValue = 0;
+    float maxValue = 0;
 
     //The cell[node][color] is equal to the number of adjacent nodes with the same color
     int avaliableColors[nodeCount][colorCount];
@@ -35,14 +35,14 @@ int grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights,
         }
     }
 
-    int newMaxValue = maxValue + 1;
+    float newMaxValue = maxValue - 1;
 
     if(!maxValueInit){
         cout << "ERROR: expected value for maxValueInit: true\n";
     }
 
-    while(maxValue != newMaxValue){
-        newMaxValue = maxValue;
+    while(maxValue > newMaxValue){
+        maxValue = newMaxValue;
         newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength);
     }
 

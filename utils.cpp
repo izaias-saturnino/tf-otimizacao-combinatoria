@@ -1,6 +1,8 @@
 #include "utils.hpp"
+#include <chrono>
+#include <thread>
 
-int getLowestAvaliableColor(int* totalColorWeights, int* avaliableColors, int colorCount){
+int getLowestAvaliableColor(float* totalColorWeights, int* avaliableColors, int colorCount){
     int lowestAvaliableColor = UNDEFINED;
     int lowestTotalColorWeights = 0;
     for (int i = 0; i < colorCount; i++)
@@ -20,6 +22,8 @@ int getLowestAvaliableColor(int* totalColorWeights, int* avaliableColors, int co
 }
 
 void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount){
+    cout << "node: " << node << ". color: " << nodeBestColor << "\n";
+    //this_thread::sleep_for(chrono::seconds(5));
     if(nodeBestColor == UNDEFINED){
         return;
     }
