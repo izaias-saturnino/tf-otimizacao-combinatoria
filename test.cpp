@@ -12,7 +12,7 @@ int main() {
     {
         int colorCount = 0;
 
-        int totalColorWeights[colorCount] = {0};
+        float totalColorWeights[colorCount] = {0};
         int avaliableColors[colorCount] = {0};
 
         int lowestAvaliableColor = getLowestAvaliableColor(totalColorWeights, avaliableColors, colorCount);
@@ -32,7 +32,7 @@ int main() {
     {
         int colorCount = 1;
 
-        int totalColorWeights[colorCount] = {0};
+        float totalColorWeights[colorCount] = {0};
         int avaliableColors[colorCount] = {0};
 
         int lowestAvaliableColor = getLowestAvaliableColor(totalColorWeights, avaliableColors, colorCount);
@@ -52,7 +52,7 @@ int main() {
     {
         int colorCount = 2;
 
-        int totalColorWeights[colorCount] = {0, 1};
+        float totalColorWeights[colorCount] = {0, 1};
         int avaliableColors[colorCount] = {0, 1};
 
         int lowestAvaliableColor = getLowestAvaliableColor(totalColorWeights, avaliableColors, colorCount);
@@ -72,7 +72,7 @@ int main() {
     {
         int colorCount = 2;
 
-        int totalColorWeights[colorCount] = {0, 1};
+        float totalColorWeights[colorCount] = {0, 1};
         int avaliableColors[colorCount] = {1, 0};
 
         int lowestAvaliableColor = getLowestAvaliableColor(totalColorWeights, avaliableColors, colorCount);
@@ -92,7 +92,7 @@ int main() {
     {
         int colorCount = 3;
 
-        int totalColorWeights[colorCount] = {1, 1, 1};
+        float totalColorWeights[colorCount] = {1, 1, 1};
         int avaliableColors[colorCount] = {1, 1, 1};
 
         int lowestAvaliableColor = getLowestAvaliableColor(totalColorWeights, avaliableColors, colorCount);
@@ -112,7 +112,7 @@ int main() {
     {
         int colorCount = 3;
 
-        int totalColorWeights[colorCount] = {1, 2, 3};
+        float totalColorWeights[colorCount] = {1, 2, 3};
         int avaliableColors[colorCount] = {2, 1, 0};
 
         int lowestAvaliableColor = getLowestAvaliableColor(totalColorWeights, avaliableColors, colorCount);
@@ -144,7 +144,7 @@ int main() {
         int node = 1;
         int adjacentNodesCount = 2;
 
-        int totalColorWeights[colorCount] = {1, 2, 3};
+        float totalColorWeights[colorCount] = {1, 2, 3};
         int avaliableColors[node*colorCount] =
         {
             0, 0,
@@ -187,7 +187,7 @@ int main() {
         int node = 1;
         int adjacentNodesCount = 2;
 
-        int totalColorWeights[colorCount] = {1, 2, 3};
+        float totalColorWeights[colorCount] = {1, 2, 3};
         int avaliableColors[node*colorCount] =
         {
             1, 0,
@@ -229,7 +229,7 @@ int main() {
         int node = 1;
         int adjacentNodesCount = 2;
 
-        int totalColorWeights[colorCount] = {1, 2, 3};
+        float totalColorWeights[colorCount] = {1, 2, 3};
         int avaliableColors[node*colorCount] =
         {
             0, 0,

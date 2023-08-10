@@ -123,5 +123,10 @@ float getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, fl
     updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestFirstNodeColorIterator, bestFirstNodeIterator, adjacentNodeQuantity[bestFirstNodeIterator], colorCount);
     updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestSecondNodeColorIterator, bestSecondNodeIterator, adjacentNodeQuantity[bestSecondNodeIterator], colorCount);
 
+    if (maxColor == UNDEFINED)
+    {
+        maxColorValue = numeric_limits<float>::infinity()*-1;
+    }
+    
     return maxColorValue;
 }

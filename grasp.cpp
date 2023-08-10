@@ -41,7 +41,7 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         cout << "ERROR: expected value for maxValueInit: true\n";
     }
 
-    while(maxValue > newMaxValue){
+    while(maxValue != newMaxValue){
         maxValue = newMaxValue;
         newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength);
     }

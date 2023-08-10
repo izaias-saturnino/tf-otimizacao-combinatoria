@@ -9,12 +9,12 @@ int getLowestAvaliableColor(float* totalColorWeights, int* avaliableColors, int 
     {
         if(avaliableColors[i] == 0){
             if(lowestAvaliableColor == UNDEFINED){
-                lowestAvaliableColor = i;
                 lowestTotalColorWeights = totalColorWeights[i];
+                lowestAvaliableColor = i;
             }
-            else if(lowestTotalColorWeights > totalColorWeights[i]){
-                lowestAvaliableColor = i;
+            else if(totalColorWeights[i] < lowestTotalColorWeights){
                 lowestTotalColorWeights = totalColorWeights[i];
+                lowestAvaliableColor = i;
             }
         }
     }

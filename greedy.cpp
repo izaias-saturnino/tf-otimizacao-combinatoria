@@ -74,15 +74,14 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
         //while prioroty queue is not empty
         while (!orderedNodes.empty()){
-
             //select one of the best nodes
             pair<pair<int, int>, int> top_item = orderedNodes.top();
+
+            orderedNodes.pop();
 
             if(coloredNodes[top_item.second]){
                 continue;
             }
-
-            orderedNodes.pop();
 
             int node = top_item.second;
 
