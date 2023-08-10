@@ -19,11 +19,20 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         }
     }
 
+    //cout << "start of greedyConstruction\n";
+
     int returnValue = UNDEFINED;
     while(returnValue == UNDEFINED){
         //remake greedy construction
         returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeListLength, &avaliableColors[0][0]);
     }
+
+    for (int i = 0; i < nodeCount; i++)
+    {
+        //cout << "node: " << i << ". color: " << coloration[i] << "\n";
+    }
+
+    //cout << "end of greedyConstruction\n";
 
     for(int i = 0; i < colorCount; i++){
         if(!maxValueInit){
@@ -46,5 +55,12 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength);
     }
 
+    for (int i = 0; i < nodeCount; i++)
+    {
+        //cout << "node: " << i << ". color: " << coloration[i] << "\n";
+    }
+
+    //cout << "end of neighbourhood search\n";
+    
     return maxValue;
 }

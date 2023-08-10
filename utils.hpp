@@ -38,6 +38,6 @@ int getHighestAvaliableColor(float* totalColorWeights, int* avaliableColors);
 int* getLowestAndHighestAvaliableColor(float* totalColorWeights, int* avaliableColors);
 
 //changes the color of the node and changes the avaliableColors matrix for consistency
-void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount);
+void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights);
 
 #endif /* _UTILS_H_ */

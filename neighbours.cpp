@@ -111,17 +111,17 @@ float getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, fl
         totalColorWeights[secondNodeCurrentColor] = totalColorWeightsCopy[secondNodeCurrentColor];
         totalColorWeights[bestSecondNodeColorIterator] = totalColorWeightsCopy[bestSecondNodeColorIterator];
 
-        cout << "bestFirstNodeIterator: " << bestFirstNodeIterator << "\n";
-        cout << "firstNodeCurrentColor: " << firstNodeCurrentColor << "\n";
-        cout << "firstNodeNewColor: " << bestFirstNodeColorIterator << "\n";
+        //cout << "firstNode: " << bestFirstNodeIterator << ". ";
+        //cout << "color: " << firstNodeCurrentColor << ". ";
+        //cout << "newColor: " << bestFirstNodeColorIterator << "\n";
 
-        cout << "bestSecondNodeIterator: " << bestSecondNodeIterator << "\n";
-        cout << "secondNodeCurrentColor: " << secondNodeCurrentColor << "\n";
-        cout << "secondNodeNewColor: " << bestSecondNodeColorIterator << "\n";
+        //cout << "secondNode: " << bestSecondNodeIterator << ". ";
+        //cout << "color: " << secondNodeCurrentColor << ". ";
+        //cout << "newColor: " << bestSecondNodeColorIterator << "\n";
     }
 
-    updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestFirstNodeColorIterator, bestFirstNodeIterator, adjacentNodeQuantity[bestFirstNodeIterator], colorCount);
-    updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestSecondNodeColorIterator, bestSecondNodeIterator, adjacentNodeQuantity[bestSecondNodeIterator], colorCount);
+    updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestFirstNodeColorIterator, bestFirstNodeIterator, adjacentNodeQuantity[bestFirstNodeIterator], colorCount, totalColorWeights, weights);
+    updateNodeColor(avaliableColors, nodeCount, coloration, nodeAjacencyList, bestSecondNodeColorIterator, bestSecondNodeIterator, adjacentNodeQuantity[bestSecondNodeIterator], colorCount, totalColorWeights, weights);
 
     if (maxColor == UNDEFINED)
     {

@@ -19,8 +19,6 @@ int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAdjacencyList,
 
 int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors){
 
-    cout << "start of greedyConstruction\n";
-
     for (int i = 0; i < colorCount; i++)
     {
         totalColorWeights[i] = 0;
@@ -55,7 +53,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
         }
 
         int color = getNodeBestStepColor(nodeCount, colorCount, nodeAdjacencyList, weights, coloration, totalColorWeights, randomNode, avaliableColors);
-        updateNodeColor(avaliableColors, nodeCount, coloration, nodeAdjacencyList, color, randomNode, adjacentNodeQuantity[randomNode], colorCount);    
+        updateNodeColor(avaliableColors, nodeCount, coloration, nodeAdjacencyList, color, randomNode, adjacentNodeQuantity[randomNode], colorCount, totalColorWeights, weights);    
         coloredNodes[randomNode] = true;
 
         totalColoredNodes++;
@@ -86,7 +84,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             int node = top_item.second;
 
             int color = getNodeBestStepColor(nodeCount, colorCount, nodeAdjacencyList, weights, coloration, totalColorWeights, node, avaliableColors);
-            updateNodeColor(avaliableColors, nodeCount, coloration, nodeAdjacencyList, color, node, adjacentNodeQuantity[node], colorCount);
+            updateNodeColor(avaliableColors, nodeCount, coloration, nodeAdjacencyList, color, node, adjacentNodeQuantity[node], colorCount, totalColorWeights, weights);
             coloredNodes[node] = true;
 
             totalColoredNodes++;
@@ -136,8 +134,6 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             break;
         }
     }
-
-    cout << "end of greedyConstruction\n";
 
     return returnValue;
 }

@@ -21,8 +21,7 @@ int getLowestAvaliableColor(float* totalColorWeights, int* avaliableColors, int 
     return lowestAvaliableColor;
 }
 
-void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount){
-    cout << "node: " << node << ". color: " << nodeBestColor << "\n";
+void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights){
     //this_thread::sleep_for(chrono::seconds(5));
     if(nodeBestColor == UNDEFINED){
         return;
@@ -33,8 +32,10 @@ void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int**
         int firstNodeColor = coloration[node];
         if(firstNodeColor != UNDEFINED){
             avaliableColors[adjacentNode*colorCount + firstNodeColor]--;
+            totalColorWeights[firstNodeColor] -= weights[node];
         }
         avaliableColors[adjacentNode*colorCount + nodeBestColor]++;
+        totalColorWeights[nodeBestColor] += weights[node];
     }
     coloration[node] = nodeBestColor;
 }
