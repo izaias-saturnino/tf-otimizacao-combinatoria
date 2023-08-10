@@ -3,18 +3,30 @@
 #include "greedy.hpp"
 
 int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int node, int* avaliableColors){
-    if(coloration[node] != UNDEFINED){
-        return coloration[node];
-    }
     int* nodeAvaliableColors = &(avaliableColors[node*colorCount]);
     int nodeBestColor = getLowestAvaliableColor(totalColorWeights, nodeAvaliableColors, colorCount);
-
-    if (nodeBestColor == UNDEFINED)
-    {
-        //recolor until the graph is consistent following some heuristic
-    }
     
     return nodeBestColor;
+}
+
+int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, float* totalColorWeights, int node, int adjacentNodeQuantity){
+
+    priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int>>, CompareColors> orderedColors;
+    
+    int adjacentNodeColorOccurance[colorCount] = {0};
+
+    for (int i = 0; i < adjacentNodeQuantity; i++)
+    {
+        int currentAdjacentNode = nodeAdjacencyList[node][i];
+        int currentAdjacentNodeColor = coloration[currentAdjacentNode];
+        adjacentNodeColorOccurance[currentAdjacentNodeColor]++;
+    }
+    for (int i = 0; i < colorCount; i++)
+    {
+        orderedColors.push({{adjacentNodeColorOccurance[i], totalColorWeights[i]}, i});
+    }
+
+    return orderedColors.top().second;
 }
 
 int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors){
@@ -28,7 +40,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
     int avaliableColorQuantity[nodeCount] = {colorCount};
 
     //priority queue ((avaliableColorQuantity, adjacentNodeCount) : node)
-    priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int>>, ComparePairs> orderedNodes;
+    priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int>>, CompareNodes> orderedNodes;
 
     bool coloredNodes[nodeCount] = {false};
     
@@ -38,41 +50,26 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
     while(totalColoredNodes < nodeCount){
 
+        //start with a random node
+        int node = UNDEFINED;
         int randomNodeIndex = rand() % (nodeCount-totalColoredNodes);
-
-        int randomNode = UNDEFINED;
 
         for (int i = 0; i < nodeCount; i++)
         {
             if (randomNodeIndex == 0)
             {
-                randomNode = i;
+                node = i;
                 break;
             }
             randomNodeIndex--;
         }
 
-        int color = getNodeBestStepColor(nodeCount, colorCount, nodeAdjacencyList, weights, coloration, totalColorWeights, randomNode, avaliableColors);
-        updateNodeColor(avaliableColors, nodeCount, coloration, nodeAdjacencyList, color, randomNode, adjacentNodeQuantity[randomNode], colorCount, totalColorWeights, weights);    
-        coloredNodes[randomNode] = true;
-
-        totalColoredNodes++;
-
-        //add nodes to priority queue
-        int adjacentNodesNumber = adjacentNodeQuantity[randomNode];
-        for (int i = 0; i < adjacentNodesNumber; i++)
-        {
-            int currentAdjacentNode = nodeAdjacencyList[randomNode][i];
-            if (coloredNodes[currentAdjacentNode]){
-                continue;
-            }
-            int random = rand();
-            orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
-        }
+        int random = rand();
+        orderedNodes.push({{adjacentNodeQuantity[node], random}, node});
 
         //while prioroty queue is not empty
-        while (!orderedNodes.empty()){
-            //select one of the best nodes
+        do{
+            //select one of the best non colored avaliable nodes randomly and start coloring the graph from it
             pair<pair<int, int>, int> top_item = orderedNodes.top();
 
             orderedNodes.pop();
@@ -84,12 +81,31 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             int node = top_item.second;
 
             int color = getNodeBestStepColor(nodeCount, colorCount, nodeAdjacencyList, weights, coloration, totalColorWeights, node, avaliableColors);
+
+            if (color == UNDEFINED)
+            {
+                color = getNodeRecolorationColor(colorCount, nodeAdjacencyList, coloration, totalColorWeights, node, adjacentNodeQuantity[node]);
+                
+                int adjacentNodesNumber = adjacentNodeQuantity[node];
+                for (int i = 0; i < adjacentNodesNumber; i++)
+                {
+                    int currentAdjacentNode = nodeAdjacencyList[node][i];
+                    if (coloration[currentAdjacentNode] == color)
+                    {
+                        updateNodeColor(avaliableColors, nodeCount, coloration, nodeAdjacencyList, UNDEFINED, currentAdjacentNode, adjacentNodeQuantity[currentAdjacentNode], colorCount, totalColorWeights, weights);
+                        coloredNodes[currentAdjacentNode] = false;
+                        int random = rand();
+                        orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
+                    }
+                }
+            }
+
             updateNodeColor(avaliableColors, nodeCount, coloration, nodeAdjacencyList, color, node, adjacentNodeQuantity[node], colorCount, totalColorWeights, weights);
             coloredNodes[node] = true;
 
             totalColoredNodes++;
 
-            //add nodes to priority queue
+            //add adjacent nodes to priority queue
             int adjacentNodesNumber = adjacentNodeQuantity[node];
             for (int i = 0; i < adjacentNodesNumber; i++)
             {
@@ -100,39 +116,26 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                 int random = rand();
                 orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
             }
-        }
+        }while(!orderedNodes.empty());
+        //if there are nodes left, start the process again
     }
 
     //check for valid coloration
 
-    bool valid = false;
+    bool valid = true;
 
-    while (!valid)
+    for (int i = 0; i < nodeCount; i++)
     {
-        valid = true;
-
-        int startNode = UNDEFINED;
-
-        for (int i = 0; i < nodeCount; i++)
+        if (coloration[i] == UNDEFINED || coloration[i] >= colorCount)
         {
-            if (coloration[i] == UNDEFINED || coloration[i] >= colorCount)
-            {
-                valid = false;
-                startNode = i;
-                break;
-            }
-        }
-        if (valid)
-        {
+            valid = false;
             break;
         }
-        else{
-            //recolor starting from startNode
+    }
 
-            //remove this error code and the break if using the recoloration above
-            cout << "ERROR: expected valid coloration\n";
-            break;
-        }
+    if(!valid){
+        cout << "ERROR: expected valid coloration\n";
+        returnValue = UNDEFINED;
     }
 
     return returnValue;

@@ -22,7 +22,6 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
 
     int returnValue = UNDEFINED;
     while(returnValue == UNDEFINED){
-        //remake greedy construction
         returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeListLength, &avaliableColors[0][0]);
     }
 
@@ -81,7 +80,7 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
                 cout << "node: " << i << ". color: " << coloration[i] << "\n";
             }
         }
-        
+
     } while (maxValue < oldMaxValue);
 
     cout << "end of neighbourhood search\n";

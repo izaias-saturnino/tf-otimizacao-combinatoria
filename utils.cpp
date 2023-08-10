@@ -34,36 +34,41 @@ void printVectorAsMatrix(int* vector, int rowCount, int colCount){
 }
 
 void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights){
-    //this_thread::sleep_for(chrono::seconds(5));
-    if(nodeBestColor == UNDEFINED){
-        return;
+
+    if (nodeBestColor == UNDEFINED){
+        cout << "possible error ahead\n";
     }
+
+    int nodeColor = coloration[node];
+
     //printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
 
-    int firstNodeColor = coloration[node];
     //cout << "node: " << node << ". ";
-    //cout << "firstNodeColor: " << firstNodeColor << ". ";
+    //cout << "nodeColor: " << nodeColor << ". ";
     //cout << "nodeBestColor: " << nodeBestColor << "\n";
 
-    if (firstNodeColor != UNDEFINED)
+    if (nodeColor != UNDEFINED)
     {
-        totalColorWeights[firstNodeColor] -= weights[node];
+        totalColorWeights[nodeColor] -= weights[node];
     }
-    totalColorWeights[nodeBestColor] += weights[node];
-    
+    if (nodeBestColor != UNDEFINED){
+        totalColorWeights[nodeBestColor] += weights[node];
+    }
     
     for(int adjacentNodeIndex = 0; adjacentNodeIndex < adjacentNodesCount; adjacentNodeIndex++){
         int adjacentNode = nodeAjacencyList[node][adjacentNodeIndex];
 
-        //cout << "totalColorWeights[firstNodeColor]: " << totalColorWeights[firstNodeColor] << ". ";
+        //cout << "totalColorWeights[nodeColor]: " << totalColorWeights[nodeColor] << ". ";
         //cout << "totalColorWeights[nodeBestColor]: " << totalColorWeights[nodeBestColor] << "\n";
 
-        if(firstNodeColor != UNDEFINED){
-            avaliableColors[adjacentNode*colorCount + firstNodeColor]--;
+        if(nodeColor != UNDEFINED){
+            avaliableColors[adjacentNode*colorCount + nodeColor]--;
         }
-        avaliableColors[adjacentNode*colorCount + nodeBestColor]++;
+        if (nodeBestColor != UNDEFINED){
+            avaliableColors[adjacentNode*colorCount + nodeBestColor]++;
+        }
 
-        //cout << "totalColorWeights[firstNodeColor]: " << totalColorWeights[firstNodeColor] << ". ";
+        //cout << "totalColorWeights[nodeColor]: " << totalColorWeights[nodeColor] << ". ";
         //cout << "totalColorWeights[nodeBestColor]: " << totalColorWeights[nodeBestColor] << "\n";
 
         //cout << "adjacentNode: " << adjacentNode << "\n";
