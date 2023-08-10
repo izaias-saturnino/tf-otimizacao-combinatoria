@@ -6,7 +6,7 @@ int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAdjacencyList,
     if(coloration[node] != UNDEFINED){
         return coloration[node];
     }
-    int* nodeAvaliableColors = &avaliableColors[node*colorCount];
+    int* nodeAvaliableColors = &(avaliableColors[node*colorCount]);
     int nodeBestColor = getLowestAvaliableColor(totalColorWeights, nodeAvaliableColors, colorCount);
 
     if (nodeBestColor == UNDEFINED)
@@ -130,7 +130,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             //recolor starting from startNode
 
             //remove this error code and the break if using the recoloration above
-            //printf("ERROR: expected valid coloration\n");
+            cout << "ERROR: expected valid coloration\n";
             break;
         }
     }

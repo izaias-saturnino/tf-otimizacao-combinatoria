@@ -31,6 +31,11 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         cout << "node: " << i << ". color: " << coloration[i] << "\n";
     }
 
+    for (int i = 0; i < colorCount; i++)
+    {
+        cout << "totalColorWeights[" << i << "]: " << totalColorWeights[i] << "\n";
+    }
+
     cout << "end of greedyConstruction\n";
 
     maxValue = totalColorWeights[0];
@@ -41,34 +46,55 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         }
     }
 
+    cout << "maxValue: " << maxValue << "\n";
+
     float totalColorWeightsCopy[colorCount];
 
-    for (int i = 0; i < colorCount; i++)
-    {
-        totalColorWeightsCopy[i] = totalColorWeights[i];
-    }
-
     int colorationCopy[nodeCount];
-
-    for (int i = 0; i < nodeCount; i++)
-    {
-        colorationCopy[i] = coloration[i];
-    }
-
-    int* currentColorationPointer = colorationCopy;
-    float* currenttotalColorWeightsPointer = totalColorWeightsCopy;
     
     float oldMaxValue = maxValue;
 
+    int firstNode, secondNode, firstColor, secondColor = UNDEFINED;
+
     do{
         cout << "neighbourhood search iteration\n";
+
+        for (int i = 0; i < nodeCount; i++)
+        {
+            colorationCopy[i] = coloration[i];
+        }
+
+        for (int i = 0; i < colorCount; i++)
+        {
+            totalColorWeightsCopy[i] = totalColorWeights[i];
+        }
         
         oldMaxValue = maxValue;
-        maxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, oldMaxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength);
+        maxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeightsCopy, colorationCopy, oldMaxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength, firstNode, secondNode, firstColor, secondColor);
 
         if (maxValue < oldMaxValue)
         {
-            //get changes
+            if (coloration[firstNode] != UNDEFINED)
+            {
+                avaliableColors[firstNode][coloration[firstNode]] -= 1;
+            }
+            avaliableColors[firstNode][firstColor] += 1;
+            
+            if (coloration[secondNode] != UNDEFINED)
+            {
+                avaliableColors[secondNode][coloration[secondNode]] -= 1;
+            }
+            avaliableColors[secondNode][secondColor] += 1;
+
+            for (int i = 0; i < nodeCount; i++)
+            {
+                coloration[i] = colorationCopy[i];
+            }
+
+            for (int i = 0; i < colorCount; i++)
+            {
+                totalColorWeights[i] = totalColorWeightsCopy[i];
+            }
         }
         
         for (int i = 0; i < nodeCount; i++)

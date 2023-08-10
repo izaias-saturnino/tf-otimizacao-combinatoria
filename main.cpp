@@ -115,11 +115,12 @@ int main() {
         }
     }
 
-    printf("%f", maxValue);
+    cout << "finalMaxValue: " << maxValue <<"\n";
 
+    cout << "final coloration:\n";
     for (int i = 0; i < nodeCount; i++)
     {
-        printf("node: %d, color: %d\n", i, maxColorationPointer[i]);
+        cout << "node: " << i << ". color: " << maxColorationPointer[i] << "\n";
     }
     
     return 0;
