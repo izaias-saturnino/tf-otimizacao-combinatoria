@@ -33,7 +33,7 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
 
     for (int i = 0; i < colorCount; i++)
     {
-        cout << "totalColorWeights[" << i << "]: " << totalColorWeights[i] << "\n";
+        //cout << "totalColorWeights[" << i << "]: " << totalColorWeights[i] << "\n";
     }
 
     cout << "end of greedyConstruction\n";
@@ -70,44 +70,25 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         }
         
         oldMaxValue = maxValue;
-        maxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeightsCopy, colorationCopy, oldMaxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength, firstNode, secondNode, firstColor, secondColor);
+        maxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, oldMaxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength, firstNode, secondNode, firstColor, secondColor);
+        
+        //printVectorAsMatrix(&avaliableColors[0][0], nodeCount, colorCount);
 
         if (maxValue < oldMaxValue)
         {
-            if (coloration[firstNode] != UNDEFINED)
-            {
-                avaliableColors[firstNode][coloration[firstNode]] -= 1;
-            }
-            avaliableColors[firstNode][firstColor] += 1;
-            
-            if (coloration[secondNode] != UNDEFINED)
-            {
-                avaliableColors[secondNode][coloration[secondNode]] -= 1;
-            }
-            avaliableColors[secondNode][secondColor] += 1;
-
             for (int i = 0; i < nodeCount; i++)
             {
-                coloration[i] = colorationCopy[i];
-            }
-
-            for (int i = 0; i < colorCount; i++)
-            {
-                totalColorWeights[i] = totalColorWeightsCopy[i];
+                cout << "node: " << i << ". color: " << coloration[i] << "\n";
             }
         }
         
-        for (int i = 0; i < nodeCount; i++)
-        {
-            cout << "node: " << i << ". color: " << coloration[i] << "\n";
-        }
     } while (maxValue < oldMaxValue);
 
     cout << "end of neighbourhood search\n";
 
     for (int i = 0; i < nodeCount; i++)
     {
-        cout << "node: " << i << ". color: " << coloration[i] << "\n";
+        //cout << "node: " << i << ". color: " << coloration[i] << "\n";
     }
     
     return maxValue;

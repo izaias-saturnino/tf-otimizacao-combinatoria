@@ -7,6 +7,7 @@ int main() {
     int nodeCount = 0;
     int edgeCount = 0;
     int colorCount = 0;
+    float minimal_possible_max_value = numeric_limits<float>::infinity()*-1;
 
     scanf("%d", &nodeCount);
     scanf("%d", &edgeCount);
@@ -17,6 +18,10 @@ int main() {
     //reading weights
     for(int i = 0; i < nodeCount; i++){
         scanf("%f", &weights[i]);
+        if (minimal_possible_max_value < weights[i])
+        {
+            minimal_possible_max_value = weights[i];
+        }
     }
 
     //creating hash for edges
@@ -112,6 +117,11 @@ int main() {
 
         if(time_taken > TIMEOUT){
             timeout = true;
+        }
+
+        if (newMaxValue == minimal_possible_max_value)
+        {
+            break;
         }
     }
 

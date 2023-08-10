@@ -38,12 +38,12 @@ void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int**
     if(nodeBestColor == UNDEFINED){
         return;
     }
-    printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
+    //printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
 
     int firstNodeColor = coloration[node];
-    cout << "node: " << node << ". ";
-    cout << "firstNodeColor: " << firstNodeColor << ". ";
-    cout << "nodeBestColor: " << nodeBestColor << "\n";
+    //cout << "node: " << node << ". ";
+    //cout << "firstNodeColor: " << firstNodeColor << ". ";
+    //cout << "nodeBestColor: " << nodeBestColor << "\n";
 
     if (firstNodeColor != UNDEFINED)
     {
@@ -55,19 +55,20 @@ void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int**
     for(int adjacentNodeIndex = 0; adjacentNodeIndex < adjacentNodesCount; adjacentNodeIndex++){
         int adjacentNode = nodeAjacencyList[node][adjacentNodeIndex];
 
-        cout << "totalColorWeights[firstNodeColor]: " << totalColorWeights[firstNodeColor] << ". ";
-        cout << "totalColorWeights[nodeBestColor]: " << totalColorWeights[nodeBestColor] << "\n";
+        //cout << "totalColorWeights[firstNodeColor]: " << totalColorWeights[firstNodeColor] << ". ";
+        //cout << "totalColorWeights[nodeBestColor]: " << totalColorWeights[nodeBestColor] << "\n";
 
         if(firstNodeColor != UNDEFINED){
             avaliableColors[adjacentNode*colorCount + firstNodeColor]--;
         }
         avaliableColors[adjacentNode*colorCount + nodeBestColor]++;
 
-        cout << "totalColorWeights[firstNodeColor]: " << totalColorWeights[firstNodeColor] << ". ";
-        cout << "totalColorWeights[nodeBestColor]: " << totalColorWeights[nodeBestColor] << "\n";
+        //cout << "totalColorWeights[firstNodeColor]: " << totalColorWeights[firstNodeColor] << ". ";
+        //cout << "totalColorWeights[nodeBestColor]: " << totalColorWeights[nodeBestColor] << "\n";
 
-        cout << "adjacentNode: " << adjacentNode << "\n";
+        //cout << "adjacentNode: " << adjacentNode << "\n";
     }
-    printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
+
+    //printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
     coloration[node] = nodeBestColor;
 }
