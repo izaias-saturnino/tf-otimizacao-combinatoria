@@ -1,7 +1,7 @@
 #include "neighbours.hpp"
 #include "utils.hpp"
 
-int getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeNewColor, int firstNode, int secondNode, int* totalColorWeights, int maxColorValue, float* weights, int colorCount, int* maxColor){
+int getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeNewColor, int firstNode, int secondNode, int* totalColorWeights, int maxColorValue, float* weights, int colorCount){
 
     int firstNodeCurrentColor = coloration[firstNode];
     int secondNodeCurrentColor = coloration[secondNode];
@@ -17,7 +17,6 @@ int getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeN
     for(int i = 0; i < colorCount; i++){
         if(totalColorWeights[i] > maxColorValue){
             maxColorValue = totalColorWeights[i];
-            *maxColor = i;
         }
     }
     return maxColorValue;
@@ -65,7 +64,6 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
                             if(firstNodeColorIterator != maxColor && secondNodeColorIterator != maxColor && maxColor != UNDEFINED){
                                 continue;
                             }
-                            int newMaxColor = UNDEFINED;
 
                             {
                                 int firstNodeCurrentColor = coloration[firstNodeIterator];
@@ -78,11 +76,16 @@ int getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, int*
                                 totalColorWeightsCopy[secondNodeColorIterator] = totalColorWeights[secondNodeColorIterator];
                             }
 
-                            int newValue = getColorChangesValue(coloration, firstNodeColorIterator, secondNodeColorIterator, firstNodeIterator, secondNodeIterator, totalColorWeightsCopy, maxColorValue, weights, colorCount, &newMaxColor);
+                            int newValue = getColorChangesValue(coloration, firstNodeColorIterator, secondNodeColorIterator, firstNodeIterator, secondNodeIterator, totalColorWeightsCopy, maxColorValue, weights, colorCount);
                             
                             if(newValue < maxColorValue){
                                 maxColorValue = newValue;
-                                maxColor = newMaxColor;
+
+                                for(int i = 0; i < colorCount; i++){
+                                    if(totalColorWeights[i] == maxColorValue){
+                                        maxColor = i;
+                                    }
+                                }
 
                                 bestFirstNodeIterator = firstNodeIterator;
                                 bestSecondNodeIterator = secondNodeIterator;
