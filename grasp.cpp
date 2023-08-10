@@ -5,8 +5,7 @@
 
 float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash){
     float totalColorWeights[colorCount];
-    bool maxValueInit = false;
-    float maxValue = 0;
+    float maxValue = numeric_limits<float>::infinity();
 
     //The cell[node][color] is equal to the number of adjacent nodes with the same color
     int avaliableColors[nodeCount][colorCount];
@@ -19,7 +18,7 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         }
     }
 
-    //cout << "start of greedyConstruction\n";
+    cout << "start of greedyConstruction\n";
 
     int returnValue = UNDEFINED;
     while(returnValue == UNDEFINED){
@@ -29,38 +28,61 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
 
     for (int i = 0; i < nodeCount; i++)
     {
-        //cout << "node: " << i << ". color: " << coloration[i] << "\n";
+        cout << "node: " << i << ". color: " << coloration[i] << "\n";
     }
 
-    //cout << "end of greedyConstruction\n";
+    cout << "end of greedyConstruction\n";
+
+    maxValue = totalColorWeights[0];
 
     for(int i = 0; i < colorCount; i++){
-        if(!maxValueInit){
-            maxValue = totalColorWeights[i];
-            maxValueInit = true;
-        }
-        else if(maxValue < totalColorWeights[i]){
+        if(maxValue < totalColorWeights[i]){
             maxValue = totalColorWeights[i];
         }
     }
 
-    float newMaxValue = maxValue - 1;
+    float totalColorWeightsCopy[colorCount];
 
-    if(!maxValueInit){
-        cout << "ERROR: expected value for maxValueInit: true\n";
+    for (int i = 0; i < colorCount; i++)
+    {
+        totalColorWeightsCopy[i] = totalColorWeights[i];
     }
 
-    while(maxValue != newMaxValue){
-        maxValue = newMaxValue;
-        newMaxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, maxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength);
-    }
+    int colorationCopy[nodeCount];
 
     for (int i = 0; i < nodeCount; i++)
     {
-        //cout << "node: " << i << ". color: " << coloration[i] << "\n";
+        colorationCopy[i] = coloration[i];
     }
 
-    //cout << "end of neighbourhood search\n";
+    int* currentColorationPointer = colorationCopy;
+    float* currenttotalColorWeightsPointer = totalColorWeightsCopy;
+    
+    float oldMaxValue = maxValue;
+
+    do{
+        cout << "neighbourhood search iteration\n";
+        
+        oldMaxValue = maxValue;
+        maxValue = getBestNeighbour(nodeCount, colorCount, nodeAjacencyList, totalColorWeights, coloration, oldMaxValue, weights, &avaliableColors[0][0], adjacencyHash, adjacentNodeListLength);
+
+        if (maxValue < oldMaxValue)
+        {
+            //get changes
+        }
+        
+        for (int i = 0; i < nodeCount; i++)
+        {
+            cout << "node: " << i << ". color: " << coloration[i] << "\n";
+        }
+    } while (maxValue < oldMaxValue);
+
+    cout << "end of neighbourhood search\n";
+
+    for (int i = 0; i < nodeCount; i++)
+    {
+        cout << "node: " << i << ". color: " << coloration[i] << "\n";
+    }
     
     return maxValue;
 }

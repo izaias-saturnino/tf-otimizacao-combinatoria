@@ -1,15 +1,15 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
-#define UNDEFINED -1
-#define TIMEOUT 10
-
 #include <iostream>
 #include <stdio.h>
 #include <tuple>
 #include <functional>
 #include <unordered_set>
 #include <limits>
+
+#define UNDEFINED -1
+#define TIMEOUT 10
 
 using namespace std;
 

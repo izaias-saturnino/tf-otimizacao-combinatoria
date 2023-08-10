@@ -30,7 +30,7 @@ int main() {
 
     //creaating list for edges
     int adjacentNodeListLength[nodeCount] = {0};
-    int adjacentNodeListInit[nodeCount] = {0};
+    int adjacentNodeListInitCounter[nodeCount] = {0};
     int* nodeAjacencyList[nodeCount];
 
     //reading edges
@@ -67,11 +67,11 @@ int main() {
         adjacencyHash.insert(make_pair(secondNode, firstNode));
 
         //filling the nodeAjacencyList with the edges
-        nodeAjacencyList[firstNode][adjacentNodeListInit[firstNode]] = secondNode;
-        adjacentNodeListInit[firstNode]++;
+        nodeAjacencyList[firstNode][adjacentNodeListInitCounter[firstNode]] = secondNode;
+        adjacentNodeListInitCounter[firstNode]++;
 
-        nodeAjacencyList[secondNode][adjacentNodeListInit[secondNode]] = firstNode;
-        adjacentNodeListInit[secondNode]++;
+        nodeAjacencyList[secondNode][adjacentNodeListInitCounter[secondNode]] = firstNode;
+        adjacentNodeListInitCounter[secondNode]++;
     }
     //finish reading instance
 
@@ -86,8 +86,7 @@ int main() {
 
     bool timeout = false;
 
-    bool maxValueInit = false;
-    float maxValue = 0;
+    float maxValue = numeric_limits<float>::infinity();
 
     srand(time(NULL));
 
@@ -104,11 +103,7 @@ int main() {
 
         float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash);
 
-        if(!maxValueInit){
-            maxValue = newMaxValue;
-            maxValueInit = true;
-        }
-        else if(newMaxValue < maxValue){
+        if(newMaxValue < maxValue){
             maxValue = newMaxValue;
             int* maxColorationPointerCopy = maxColorationPointer;
             maxColorationPointer = currentColorationPointer;
