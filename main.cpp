@@ -106,7 +106,10 @@ int main() {
         t_diff = clock() - t0;
         double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
 
+        cout << "time taken in seconds: " << time_taken << "\n";
+
         if(time_taken > TIMEOUT){
+            cout << "timeout\n";
             break;
         }
 
