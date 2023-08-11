@@ -52,3 +52,5 @@ Mkfile.old
 dkms.conf
 .vscode
 cmb_instances
+input.txt
+outputs.txt
