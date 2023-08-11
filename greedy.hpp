@@ -5,10 +5,12 @@
 
 struct CompareNodes {
     bool operator()(const pair<pair<int, int>, int>& p1, const pair<pair<int, int>, int>& p2) {
-        if (p1.first.first != p2.first.first) {
-            return p1.first.first > p2.first.first; // Smallest first number comes first
-        } else {
-            return p1.first.second < p2.first.second; // Highest second number comes first
+        if (p1.first.first == p2.first.first)
+        {
+            return p1.first.second < p2.first.second;
+        }
+        else{
+            return p1.first.first < p2.first.first;
         }
     }
 };

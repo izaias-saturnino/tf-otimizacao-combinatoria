@@ -46,7 +46,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
     //used by greedy coloring along with adjacent node count
     int avaliableColorQuantity[nodeCount] = {colorCount};
 
-    //priority queue ((avaliableColorQuantity, adjacentNodeCount) : node)
+    //priority queue ((adjacentNodeCount, random) : node)
     priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int>>, CompareNodes> orderedNodes;
 
     bool coloredNodes[nodeCount] = {false};
@@ -91,6 +91,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
             if (color == UNDEFINED)
             {
+                cout << "node recoloration\n";
                 color = getNodeRecolorationColor(colorCount, nodeAdjacencyList, coloration, totalColorWeights, node, adjacentNodeQuantity[node]);
                 
                 int adjacentNodesNumber = adjacentNodeQuantity[node];
@@ -123,6 +124,17 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                 int random = rand();
                 orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
             }
+
+            cout << "coloration:\n";
+
+            for (int i = 0; i < nodeCount; i++)
+            {
+                cout << coloration[i] << " ";
+            }
+
+            cout << "\n";
+            
+
         }while(!orderedNodes.empty());
         //if there are nodes left, start the process again
     }
