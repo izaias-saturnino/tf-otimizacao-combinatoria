@@ -33,10 +33,10 @@ void printVectorAsMatrix(int* vector, int rowCount, int colCount){
     }
 }
 
-void updateNodeColor(int* avaliableColors, int nodeCount, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights){
+void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights){
 
     if (nodeBestColor == UNDEFINED){
-        cout << "possible error ahead\n";
+        //cout << "possible error ahead\n";
     }
 
     int nodeColor = coloration[node];

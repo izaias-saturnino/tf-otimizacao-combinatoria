@@ -2,7 +2,7 @@
 #include "utils.hpp"
 #include "greedy.hpp"
 
-int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int node, int* avaliableColors){
+int getNodeBestStepColor(int colorCount, float* totalColorWeights, int node, int* avaliableColors){
     int* nodeAvaliableColors = &(avaliableColors[node*colorCount]);
     int nodeBestColor = getLowestAvaliableColor(totalColorWeights, nodeAvaliableColors, colorCount);
     
@@ -87,7 +87,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
             int node = top_item.second;
 
-            int color = getNodeBestStepColor(nodeCount, colorCount, nodeAdjacencyList, weights, coloration, totalColorWeights, node, avaliableColors);
+            int color = getNodeBestStepColor(colorCount, totalColorWeights, node, avaliableColors);
 
             if (color == UNDEFINED)
             {
@@ -99,7 +99,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                     int currentAdjacentNode = nodeAdjacencyList[node][i];
                     if (coloration[currentAdjacentNode] == color)
                     {
-                        updateNodeColor(avaliableColors, nodeCount, coloration, nodeAdjacencyList, UNDEFINED, currentAdjacentNode, adjacentNodeQuantity[currentAdjacentNode], colorCount, totalColorWeights, weights);
+                        updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, UNDEFINED, currentAdjacentNode, adjacentNodeQuantity[currentAdjacentNode], colorCount, totalColorWeights, weights);
                         coloredNodes[currentAdjacentNode] = false;
                         int random = rand();
                         orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
@@ -107,7 +107,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                 }
             }
 
-            updateNodeColor(avaliableColors, nodeCount, coloration, nodeAdjacencyList, color, node, adjacentNodeQuantity[node], colorCount, totalColorWeights, weights);
+            updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, color, node, adjacentNodeQuantity[node], colorCount, totalColorWeights, weights);
             coloredNodes[node] = true;
 
             totalColoredNodes++;
