@@ -27,9 +27,13 @@ int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* color
         {
             bestColor = i;
         }
-        else if (totalColorWeights[i] < totalColorWeights[bestColor])
+        else if (adjacentNodeColorOccurance[i] == adjacentNodeColorOccurance[bestColor])
         {
-            bestColor = i;
+            int random = rand() % colorCount;
+            if (random == 0)
+            {
+                bestColor = i;
+            }
         }
     }
 
@@ -71,6 +75,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             randomNodeIndex--;
         }
 
+        //TODO change random for weights[node] to see if there are better results
         int random = rand();
         orderedNodes.push({{adjacentNodeQuantity[node], random}, node});
 
@@ -102,6 +107,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                     {
                         updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, UNDEFINED, currentAdjacentNode, adjacentNodeQuantity[currentAdjacentNode], colorCount, totalColorWeights, weights);
                         coloredNodes[currentAdjacentNode] = false;
+                        //TODO change random for weights[node] to see if there are better results
                         int random = rand();
                         orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
                     }
