@@ -7,9 +7,10 @@
 #include <functional>
 #include <unordered_set>
 #include <limits>
+#include <time.h>
 
 #define UNDEFINED -1
-#define TIMEOUT 10
+#define TIMEOUT 3600
 
 using namespace std;
 

@@ -36,13 +36,14 @@ void printVectorAsMatrix(int* vector, int rowCount, int colCount){
 void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights){
 
     if (nodeBestColor == UNDEFINED){
+        //old
         //cout << "possible error ahead\n";
     }
 
     int nodeColor = coloration[node];
 
+    //old
     //printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
-
     //cout << "node: " << node << ". ";
     //cout << "nodeColor: " << nodeColor << ". ";
     //cout << "nodeBestColor: " << nodeBestColor << "\n";
@@ -58,6 +59,7 @@ void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyLi
     for(int adjacentNodeIndex = 0; adjacentNodeIndex < adjacentNodesCount; adjacentNodeIndex++){
         int adjacentNode = nodeAjacencyList[node][adjacentNodeIndex];
 
+        //old
         //cout << "totalColorWeights[nodeColor]: " << totalColorWeights[nodeColor] << ". ";
         //cout << "totalColorWeights[nodeBestColor]: " << totalColorWeights[nodeBestColor] << "\n";
 
@@ -68,9 +70,9 @@ void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyLi
             avaliableColors[adjacentNode*colorCount + nodeBestColor]++;
         }
 
+        //old
         //cout << "totalColorWeights[nodeColor]: " << totalColorWeights[nodeColor] << ". ";
         //cout << "totalColorWeights[nodeBestColor]: " << totalColorWeights[nodeBestColor] << "\n";
-
         //cout << "adjacentNode: " << adjacentNode << "\n";
     }
 

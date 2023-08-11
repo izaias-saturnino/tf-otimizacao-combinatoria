@@ -40,7 +40,7 @@ int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* color
     return bestColor;
 }
 
-int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors){
+int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0){
 
     for (int i = 0; i < colorCount; i++)
     {
@@ -81,6 +81,13 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
         //while prioroty queue is not empty
         do{
+            clock_t t_diff = clock() - t0;
+            double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
+
+            if(time_taken > TIMEOUT){
+                return UNDEFINED;
+            }
+
             //select one of the best non colored avaliable nodes randomly and start coloring the graph from it
             pair<pair<int, int>, int> top_item = orderedNodes.top();
 
@@ -96,7 +103,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
             if (color == UNDEFINED)
             {
-                cout << "node recoloration\n";
+                //cout << "node recoloration\n";
                 color = getNodeRecolorationColor(colorCount, nodeAdjacencyList, coloration, totalColorWeights, node, adjacentNodeQuantity[node]);
                 
                 int adjacentNodesNumber = adjacentNodeQuantity[node];
@@ -131,14 +138,14 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                 orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
             }
 
-            cout << "coloration:\n";
+            //cout << "coloration:\n";
 
             for (int i = 0; i < nodeCount; i++)
             {
-                cout << coloration[i] << " ";
+                //cout << coloration[i] << " ";
             }
 
-            cout << "\n";
+            //cout << "\n";
             
 
         }while(!orderedNodes.empty());
@@ -159,7 +166,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
     }
 
     if(!valid){
-        cout << "ERROR: expected valid coloration\n";
+        //cout << "ERROR: expected valid coloration\n";
         returnValue = UNDEFINED;
     }
 

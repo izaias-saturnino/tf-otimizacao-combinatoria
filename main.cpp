@@ -1,4 +1,3 @@
-#include <time.h>
 #include "utils.hpp"
 #include "grasp.hpp"
 
@@ -92,10 +91,11 @@ int main() {
     bool timeout = false;
 
     float maxValue = numeric_limits<float>::infinity();
+    float newMaxValue;
 
     srand(time(NULL));
 
-    while(!timeout){
+    while(maxValue != minimal_possible_max_value){
 
         //clear currentColorationPointer to reuse in GRASP
         for (int i = 0; i < nodeCount; i++)
@@ -106,22 +106,20 @@ int main() {
         t_diff = clock() - t0;
         double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
 
-        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash);
+        if(time_taken > TIMEOUT){
+            break;
+        }
+
+        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0);
+
+        cout << "newMaxValue: " << newMaxValue <<"\n";
 
         if(newMaxValue < maxValue){
+            cout << "bestMaxValue: " << newMaxValue <<"\n";
             maxValue = newMaxValue;
             int* maxColorationPointerCopy = maxColorationPointer;
             maxColorationPointer = currentColorationPointer;
             currentColorationPointer = maxColorationPointerCopy;
-        }
-
-        if(time_taken > TIMEOUT){
-            timeout = true;
-        }
-
-        if (newMaxValue == minimal_possible_max_value)
-        {
-            break;
         }
     }
 
@@ -130,8 +128,9 @@ int main() {
     cout << "final coloration:\n";
     for (int i = 0; i < nodeCount; i++)
     {
-        cout << "node: " << i << ". color: " << maxColorationPointer[i] << "\n";
+        cout << maxColorationPointer[i] << " ";
     }
+    cout << "\n";
     
     return 0;
 }
