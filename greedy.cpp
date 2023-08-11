@@ -11,7 +11,7 @@ int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAdjacencyList,
 
 int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, float* totalColorWeights, int node, int adjacentNodeQuantity){
 
-    priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int>>, CompareColors> orderedColors;
+    int bestColor = 0;
     
     int adjacentNodeColorOccurance[colorCount] = {0};
 
@@ -23,10 +23,17 @@ int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* color
     }
     for (int i = 0; i < colorCount; i++)
     {
-        orderedColors.push({{adjacentNodeColorOccurance[i], totalColorWeights[i]}, i});
+        if (adjacentNodeColorOccurance[i] < adjacentNodeColorOccurance[bestColor])
+        {
+            bestColor = i;
+        }
+        else if (totalColorWeights[i] < totalColorWeights[bestColor])
+        {
+            bestColor = i;
+        }
     }
 
-    return orderedColors.top().second;
+    return bestColor;
 }
 
 int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors){

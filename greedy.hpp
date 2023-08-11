@@ -13,16 +13,6 @@ struct CompareNodes {
     }
 };
 
-struct CompareColors {
-    bool operator()(const pair<pair<int, int>, int>& p1, const pair<pair<int, int>, int>& p2) {
-        if (p1.first.first != p2.first.first) {
-            return p1.first.first > p2.first.first; // Smallest first number comes first
-        } else {
-            return p1.first.second > p2.first.second; // Smallest second number comes first
-        }
-    }
-};
-
 //selects the node coloration with the lowest maxValue in this step. returns the selected color if coloring was possible and UNDEFINED if it was not. updates the avaliableColors matrix
 int getNodeBestStepColor(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, float* totalColorWeights, int node, int* avaliableColors);
 
