@@ -47,15 +47,11 @@ float getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, fl
 
     for(int firstNodeIterator = 0; firstNodeIterator < nodeCount; firstNodeIterator++){
         int* firstNodeAvaliableColors = &(avaliableColors[firstNodeIterator*colorCount]);
-        for(int secondNodeIterator = 0; secondNodeIterator < nodeCount; secondNodeIterator++){
+        for(int secondNodeIterator = firstNodeIterator + 1; secondNodeIterator < nodeCount; secondNodeIterator++){
             //old
             //cout << "start\n";
             //cout << "firstNodeIterator: " << firstNodeIterator << ". ";
             //cout << "secondNodeIterator: " << secondNodeIterator << "\n";
-            if (firstNodeIterator == secondNodeIterator)
-            {
-                continue;
-            }
 
             int* secondNodeAvaliableColors = &(avaliableColors[secondNodeIterator*colorCount]);
             
