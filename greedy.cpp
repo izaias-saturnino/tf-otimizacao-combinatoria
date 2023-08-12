@@ -51,7 +51,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
     int avaliableColorQuantity[nodeCount] = {colorCount};
 
     //priority queue ((adjacentNodeCount, random) : node)
-    priority_queue<long double> orderedNodes;
+    priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int>>, CompareNodes> orderedNodes;
 
     bool coloredNodes[nodeCount] = {false};
     
@@ -77,8 +77,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
         //TODO change random for weights[node] to see if there are better results
         int random = rand();
-        long double priorityQueueEntry = (((unsigned long long) adjacentNodeQuantity[node]) << 32) | (((unsigned long long) random) << 16) | (((unsigned long long) node));
-        orderedNodes.push(priorityQueueEntry);
+        orderedNodes.push({{adjacentNodeQuantity[node], random}, node});
 
         //while prioroty queue is not empty
         do{
@@ -90,15 +89,15 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             }
 
             //select one of the best non colored avaliable nodes randomly and start coloring the graph from it
-            unsigned long long top_item = orderedNodes.top();
-
-            int node = top_item % 256;
+            pair<pair<int, int>, int> top_item = orderedNodes.top();
 
             orderedNodes.pop();
 
-            if(coloredNodes[node]){
+            if(coloredNodes[top_item.second]){
                 continue;
             }
+
+            int node = top_item.second;
 
             int color = getNodeBestStepColor(colorCount, totalColorWeights, node, avaliableColors);
 
@@ -117,8 +116,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                         coloredNodes[currentAdjacentNode] = false;
                         //TODO change random for weights[node] to see if there are better results
                         int random = rand();
-                        long double priorityQueueEntry = (((unsigned long long) adjacentNodeQuantity[currentAdjacentNode]) << 32) | (((unsigned long long) random) << 16) | (((unsigned long long) currentAdjacentNode));
-                        orderedNodes.push(priorityQueueEntry);
+                        orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
                     }
                 }
             }
@@ -137,8 +135,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                     continue;
                 }
                 int random = rand();
-                long double priorityQueueEntry = (((unsigned long long) adjacentNodeQuantity[currentAdjacentNode]) << 32) | (((unsigned long long) random) << 16) | (((unsigned long long) currentAdjacentNode));
-                orderedNodes.push(priorityQueueEntry);
+                orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
             }
 
             //cout << "coloration:\n";

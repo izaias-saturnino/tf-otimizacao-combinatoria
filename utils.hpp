@@ -3,16 +3,25 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <tuple>
 #include <functional>
 #include <unordered_set>
 #include <limits>
 #include <time.h>
-#include <queue>
 
 #define UNDEFINED -1
-#define TIMEOUT 20
+#define TIMEOUT 3600
 
 using namespace std;
+
+struct TupleHash {
+    template <typename T, typename U>
+    size_t operator()(const pair<T, U>& p) const {
+        size_t h1 = hash<T>{}(p.first);
+        size_t h2 = hash<U>{}(p.second);
+        return h1 ^ (h2 << 1);
+    }
+};
 
 //returns lowest avaliable color in terms of total weight. returns UNDEFINED if no color is avaliable
 int getLowestAvaliableColor(float* totalColorWeights, int* avaliableColors, int colorCount);
