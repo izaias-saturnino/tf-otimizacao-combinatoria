@@ -3,7 +3,7 @@ compile:
 
 # Comando para linkar os arquivos compilados e gerar o executável
 link: compile
-	g++ -g -o cmb main.o neighbours.o utils.o grasp.o greedy.o -Wall -O3
+	g++ -g -o cmb main.o neighbours.o utils.o grasp.o greedy.o -Wall -O3 -pg
 
 # Comando para limpar os arquivos gerados
 	rm -f main.o neighbours.o utils.o grasp.o greedy.o

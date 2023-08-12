@@ -3,7 +3,7 @@
 #include "utils.hpp"
 #include "neighbours.hpp"
 
-float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0){
+float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<unsigned long long>* adjacencyHash, clock_t t0){
     float totalColorWeights[colorCount];
     float maxValue = numeric_limits<float>::infinity();
 

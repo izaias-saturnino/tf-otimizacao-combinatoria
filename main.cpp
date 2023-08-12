@@ -30,7 +30,7 @@ int main() {
     const size_t initialCapacity = max(static_cast<size_t>(expectedNumElements / 0.7), static_cast<size_t>(10));
 
     // An unordered_set with custom hash function and initial capacity
-    unordered_set<pair<int, int>, TupleHash> adjacencyHash(initialCapacity);
+    unordered_set<unsigned long long> adjacencyHash(initialCapacity);
 
     //creaating list for edges
     int adjacentNodeListLength[nodeCount] = {0};
@@ -67,8 +67,11 @@ int main() {
         int firstNode = edges[i][0];
         int secondNode = edges[i][1];
 
-        adjacencyHash.insert(make_pair(firstNode, secondNode));
-        adjacencyHash.insert(make_pair(secondNode, firstNode));
+        long firstPair = ((unsigned long long) firstNode) || (((unsigned long long) secondNode) << 16);
+        long secondPair = ((unsigned long long) secondNode) || (((unsigned long long) firstNode) << 16);
+
+        adjacencyHash.insert(firstPair);
+        adjacencyHash.insert(secondPair);
 
         //filling the nodeAjacencyList with the edges
         nodeAjacencyList[firstNode][adjacentNodeListInitCounter[firstNode]] = secondNode;
@@ -106,7 +109,7 @@ int main() {
         t_diff = clock() - t0;
         double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
 
-        cout << "time taken in seconds: " << time_taken << "\n";
+        cout << "time in seconds: " << time_taken << "\n";
 
         if(time_taken > TIMEOUT){
             cout << "timeout\n";
