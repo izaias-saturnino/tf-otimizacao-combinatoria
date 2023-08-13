@@ -9,11 +9,13 @@ int getNodeBestStepColor(int colorCount, float* totalColorWeights, int node, int
     return nodeBestColor;
 }
 
-int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, float* totalColorWeights, int node, int adjacentNodeQuantity){
+int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, float* totalColorWeights, int node, int adjacentNodeQuantity, int* recolorationCount){
 
     int bestColor = 0;
     
     int adjacentNodeColorOccurance[colorCount] = {0};
+
+    recolorationCount[node*colorCount + coloration[node]]++;
 
     for (int i = 0; i < adjacentNodeQuantity; i++)
     {
@@ -23,16 +25,23 @@ int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* color
     }
     for (int i = 0; i < colorCount; i++)
     {
-        if (adjacentNodeColorOccurance[i] < adjacentNodeColorOccurance[bestColor])
+        if (recolorationCount[node*colorCount + i] < recolorationCount[node*colorCount + bestColor])
         {
             bestColor = i;
         }
-        else if (adjacentNodeColorOccurance[i] == adjacentNodeColorOccurance[bestColor])
+        else if (recolorationCount[node*colorCount + i] == recolorationCount[node*colorCount + bestColor])
         {
-            int random = rand() % colorCount;
-            if (random == 0)
+            if (adjacentNodeColorOccurance[i] < adjacentNodeColorOccurance[bestColor])
             {
                 bestColor = i;
+            }
+            else if (adjacentNodeColorOccurance[i] == adjacentNodeColorOccurance[bestColor])
+            {
+                int random = rand() % colorCount;
+                if (random == 0)
+                {
+                    bestColor = i;
+                }
             }
         }
     }
@@ -59,6 +68,9 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
     int returnValue = 0;
 
+    int recolorationCountMatrix[nodeCount][colorCount] = {0};
+    int* recolorationCount = &(recolorationCountMatrix[0][0]);
+
     while(totalColoredNodes < nodeCount){
 
         //start with a random node
@@ -67,13 +79,19 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
         for (int i = 0; i < nodeCount; i++)
         {
-            if (randomNodeIndex == 0)
+            if (coloredNodes[i] == false)
             {
-                node = i;
-                break;
+                if (randomNodeIndex == 0)
+                {
+                    node = i;
+                    break;
+                }
+                randomNodeIndex--;
             }
-            randomNodeIndex--;
         }
+        
+        //old
+        //cout << "random node pos: " << node << "\n";
 
         //TODO change random for weights[node] to see if there are better results
         int random = rand();
@@ -104,7 +122,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             if (color == UNDEFINED)
             {
                 //cout << "node recoloration\n";
-                color = getNodeRecolorationColor(colorCount, nodeAdjacencyList, coloration, totalColorWeights, node, adjacentNodeQuantity[node]);
+                color = getNodeRecolorationColor(colorCount, nodeAdjacencyList, coloration, totalColorWeights, node, adjacentNodeQuantity[node], recolorationCount);
                 
                 int adjacentNodesNumber = adjacentNodeQuantity[node];
                 for (int i = 0; i < adjacentNodesNumber; i++)
@@ -134,6 +152,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                 if (coloredNodes[currentAdjacentNode]){
                     continue;
                 }
+                //TODO change random for weights[node] to see if there are better results
                 int random = rand();
                 orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
             }
@@ -166,7 +185,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
     }
 
     if(!valid){
-        //cout << "ERROR: expected valid coloration\n";
+        cout << "ERROR: expected valid coloration\n";
         returnValue = UNDEFINED;
     }
 
