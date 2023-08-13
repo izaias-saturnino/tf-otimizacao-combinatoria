@@ -33,12 +33,23 @@ void printVectorAsMatrix(int* vector, int rowCount, int colCount){
     }
 }
 
-void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights){
-
-    if (nodeBestColor == UNDEFINED){
-        //old
-        //cout << "possible error ahead\n";
+void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights, int& totalColoredNodes, bool* coloredNodes){
+    int nodeColor = coloration[node];
+    if (nodeColor != UNDEFINED)
+    {
+        totalColoredNodes--;
     }
+    if (nodeBestColor != UNDEFINED){
+        totalColoredNodes++;
+        coloredNodes[node] = true;
+    }
+    else{
+        coloredNodes[node] = false;
+    }
+    updateNodeColor(avaliableColors, coloration, nodeAjacencyList, nodeBestColor, node, adjacentNodesCount, colorCount, totalColorWeights, weights);
+}
+
+void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights){
 
     int nodeColor = coloration[node];
 
@@ -54,7 +65,7 @@ void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyLi
     }
     if (nodeBestColor != UNDEFINED){
         totalColorWeights[nodeBestColor] += weights[node];
-    }
+    }    
     
     for(int adjacentNodeIndex = 0; adjacentNodeIndex < adjacentNodesCount; adjacentNodeIndex++){
         int adjacentNode = nodeAjacencyList[node][adjacentNodeIndex];

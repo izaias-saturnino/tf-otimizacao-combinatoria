@@ -130,8 +130,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                     int currentAdjacentNode = nodeAdjacencyList[node][i];
                     if (coloration[currentAdjacentNode] == color)
                     {
-                        updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, UNDEFINED, currentAdjacentNode, adjacentNodeQuantity[currentAdjacentNode], colorCount, totalColorWeights, weights);
-                        coloredNodes[currentAdjacentNode] = false;
+                        updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, UNDEFINED, currentAdjacentNode, adjacentNodeQuantity[currentAdjacentNode], colorCount, totalColorWeights, weights, totalColoredNodes, coloredNodes);
                         //TODO change random for weights[node] to see if there are better results
                         int random = rand();
                         orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
@@ -139,10 +138,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                 }
             }
 
-            updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, color, node, adjacentNodeQuantity[node], colorCount, totalColorWeights, weights);
-            coloredNodes[node] = true;
-
-            totalColoredNodes++;
+            updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, color, node, adjacentNodeQuantity[node], colorCount, totalColorWeights, weights, totalColoredNodes, coloredNodes);
 
             //add adjacent nodes to priority queue
             int adjacentNodesNumber = adjacentNodeQuantity[node];

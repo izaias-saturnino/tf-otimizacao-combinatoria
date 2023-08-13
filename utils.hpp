@@ -10,7 +10,7 @@
 #include <time.h>
 
 #define UNDEFINED -1
-#define TIMEOUT 60
+#define TIMEOUT 3600
 
 using namespace std;
 
@@ -38,6 +38,8 @@ int getHighestAvaliableColor(float* totalColorWeights, int* avaliableColors);
 //returns array with lowest and highest avaliable color in terms of total weight
 int* getLowestAndHighestAvaliableColor(float* totalColorWeights, int* avaliableColors);
 
+//changes the color of the node and changes the avaliableColors matrix for consistency
+void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights, int& totalColoredNodes, bool* coloredNodes);
 //changes the color of the node and changes the avaliableColors matrix for consistency
 void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights);
 
