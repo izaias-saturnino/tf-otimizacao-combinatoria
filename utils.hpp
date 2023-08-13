@@ -10,7 +10,7 @@
 #include <time.h>
 
 #define UNDEFINED -1
-#define TIMEOUT 3600
+#define TIMEOUT 3600*8
 
 using namespace std;
 

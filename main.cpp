@@ -106,7 +106,7 @@ int main() {
         t_diff = clock() - t0;
         double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
 
-        cout << "time taken in seconds: " << time_taken << "\n";
+        cout << "time taken for GRASP iteration in seconds: " << time_taken << "\n";
 
         if(time_taken > TIMEOUT){
             cout << "timeout\n";
@@ -114,6 +114,43 @@ int main() {
         }
 
         float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0);
+
+        //check if solution is valid
+
+        //check for full coloration
+        bool full = true;
+
+        for (int i = 0; i < nodeCount; i++)
+        {
+            if (currentColorationPointer[i] == UNDEFINED || currentColorationPointer[i] >= colorCount)
+            {
+                full = false;
+                cout << "ERROR: coloration[" << i << "] is UNDEFINED\n";
+            }
+        }
+
+        if(!full){
+            cout << "ERROR: expected full coloration\n";
+        }
+        //end of check for full coloration
+
+        bool satisfies = true;
+        for (int i = 0; i < edgeCount; i++)
+        {
+            int firstNode = edges[i][0];
+            int secondNode = edges[i][1];
+            if (currentColorationPointer[firstNode] == currentColorationPointer[secondNode])
+            {
+                satisfies = false;
+                cout << "ERROR: node " << firstNode << " has the same color as node " << secondNode << " and both nodes are adjacent\n";
+            }
+        }
+
+        if (!satisfies)
+        {
+            cout << "ERROR: coloration does not satisfy restrictions\n";
+        }
+        //end of solution verification
 
         cout << "newMaxValue: " << newMaxValue <<"\n";
 

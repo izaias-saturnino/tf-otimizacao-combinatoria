@@ -167,8 +167,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
         //if there are nodes left, start the process again
     }
 
-    //check for valid coloration
-
+    //check for full coloration
     bool valid = true;
 
     for (int i = 0; i < nodeCount; i++)
@@ -176,14 +175,15 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
         if (coloration[i] == UNDEFINED || coloration[i] >= colorCount)
         {
             valid = false;
-            break;
+            cout << "ERROR: coloration[" << i << "] is UNDEFINED\n";
         }
     }
 
     if(!valid){
-        cout << "ERROR: expected valid coloration\n";
+        cout << "ERROR: expected full coloration\n";
         returnValue = UNDEFINED;
     }
+    //end of check for full coloration
 
     return returnValue;
 }

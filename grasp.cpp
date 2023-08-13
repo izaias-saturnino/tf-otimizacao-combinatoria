@@ -27,18 +27,26 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         return maxValue;
     }
 
-    for (int i = 0; i < nodeCount; i++)
-    {
-        //cout << "node: " << i << ". color: " << coloration[i] << "\n";
-    }
-
     for (int i = 0; i < colorCount; i++)
     {
         //old
         //cout << "totalColorWeights[" << i << "]: " << totalColorWeights[i] << "\n";
     }
 
-    //cout << "end of greedyConstruction\n";
+    cout << "end of greedyConstruction\n";
+
+    clock_t t_diff = clock() - t0;
+    double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
+
+    cout << "time taken for greedyConstruction in seconds: " << time_taken << "\n";
+
+    cout << "greedyConstruction iteration coloration:\n";
+
+    for (int i = 0; i < nodeCount; i++)
+    {
+        cout << coloration[i] << " ";
+    }
+    cout << "\n";
 
     maxValue = totalColorWeights[0];
 
@@ -48,7 +56,7 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         }
     }
 
-    //cout << "maxValue: " << maxValue << "\n";
+    cout << "greedyConstruction maxValue: " << maxValue << "\n";
 
     float totalColorWeightsCopy[colorCount];
 
