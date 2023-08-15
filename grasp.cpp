@@ -3,9 +3,9 @@
 #include "utils.hpp"
 #include "neighbours.hpp"
 
-float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0){
-    float totalColorWeights[colorCount];
-    float maxValue = numeric_limits<float>::infinity();
+double grasp(int nodeCount, int colorCount, int** nodeAjacencyList, double* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0){
+    double totalColorWeights[colorCount];
+    double maxValue = numeric_limits<double>::infinity();
 
     //The cell[node][color] is equal to the number of adjacent nodes with the same color
     int avaliableColors[nodeCount][colorCount];
@@ -58,11 +58,11 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
 
     cout << "greedyConstruction maxValue: " << maxValue << "\n";
 
-    float totalColorWeightsCopy[colorCount];
+    double totalColorWeightsCopy[colorCount];
 
     int colorationCopy[nodeCount];
     
-    float oldMaxValue = maxValue;
+    double oldMaxValue = maxValue;
 
     int firstNode, secondNode, firstColor, secondColor = UNDEFINED;
 

@@ -2,14 +2,14 @@
 #include "utils.hpp"
 #include "greedy.hpp"
 
-int getNodeBestStepColor(int colorCount, float* totalColorWeights, int node, int* avaliableColors){
+int getNodeBestStepColor(int colorCount, double* totalColorWeights, int node, int* avaliableColors){
     int* nodeAvaliableColors = &(avaliableColors[node*colorCount]);
     int nodeBestColor = getLowestAvaliableColor(totalColorWeights, nodeAvaliableColors, colorCount);
     
     return nodeBestColor;
 }
 
-int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, float* totalColorWeights, int node, int adjacentNodeQuantity, int* recolorationCount){
+int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, double* totalColorWeights, int node, int adjacentNodeQuantity, int* recolorationCount){
 
     int bestColor = 0;
     
@@ -49,7 +49,7 @@ int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* color
     return bestColor;
 }
 
-int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0){
+int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, double* weights, int* coloration, double* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0){
 
     for (int i = 0; i < colorCount; i++)
     {
@@ -168,21 +168,21 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
     }
 
     //check for full coloration
-    bool valid = true;
+    //bool valid = true;
 
-    for (int i = 0; i < nodeCount; i++)
-    {
-        if (coloration[i] == UNDEFINED || coloration[i] >= colorCount)
-        {
-            valid = false;
-            cout << "ERROR: coloration[" << i << "] is UNDEFINED\n";
-        }
-    }
+    //for (int i = 0; i < nodeCount; i++)
+    //{
+    //    if (coloration[i] == UNDEFINED || coloration[i] >= colorCount)
+    //    {
+    //        valid = false;
+    //        cout << "ERROR: coloration[" << i << "] is UNDEFINED\n";
+    //    }
+    //}
 
-    if(!valid){
-        cout << "ERROR: expected full coloration\n";
-        returnValue = UNDEFINED;
-    }
+    //if(!valid){
+    //    cout << "ERROR: expected full coloration\n";
+    //    returnValue = UNDEFINED;
+    //}
     //end of check for full coloration
 
     return returnValue;

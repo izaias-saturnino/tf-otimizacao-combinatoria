@@ -6,13 +6,13 @@ int main() {
     int nodeCount = 0;
     int edgeCount = 0;
     int colorCount = 0;
-    float minimal_possible_max_value = numeric_limits<float>::infinity()*-1;
+    double minimal_possible_max_value = numeric_limits<double>::infinity()*-1;
 
     scanf("%d", &nodeCount);
     scanf("%d", &edgeCount);
     scanf("%d", &colorCount);
 
-    float weights[nodeCount];
+    double weights[nodeCount];
 
     //reading weights
     for(int i = 0; i < nodeCount; i++){
@@ -90,8 +90,8 @@ int main() {
 
     bool timeout = false;
 
-    float maxValue = numeric_limits<float>::infinity();
-    float newMaxValue;
+    double maxValue = numeric_limits<double>::infinity();
+    double newMaxValue;
 
     srand(time(NULL));
 
@@ -113,7 +113,7 @@ int main() {
             break;
         }
 
-        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0);
+        double newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0);
 
         //check if solution is valid
 
