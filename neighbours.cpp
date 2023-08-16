@@ -37,8 +37,8 @@ double getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, d
     int bestFirstNodeIterator = 0;
     int bestSecondNodeIterator = 1;
 
-    int bestFirstNodeColorIterator = 0;
-    int bestSecondNodeColorIterator = 1;
+    int bestFirstNodeColorIterator = coloration[bestFirstNodeIterator];
+    int bestSecondNodeColorIterator = coloration[bestSecondNodeIterator];
 
     double totalColorWeightsCopy[colorCount];
 
@@ -61,6 +61,11 @@ double getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, d
             for(int firstNodeColorIterator = 0; firstNodeColorIterator < colorCount; firstNodeColorIterator++){
                 for(int secondNodeColorIterator = 0; secondNodeColorIterator < colorCount; secondNodeColorIterator++){
                     
+                    if (nodes_adjacent && firstNodeColorIterator == secondNodeColorIterator)
+                    {
+                        continue;
+                    }
+
                     bool extraColorFirstNode = firstNodeAvaliableColors[firstNodeColorIterator] == 1 && coloration[secondNodeIterator] == firstNodeColorIterator && nodes_adjacent;
                     bool extraColorSecondNode = secondNodeAvaliableColors[secondNodeColorIterator] == 1 && coloration[firstNodeIterator] == secondNodeColorIterator && nodes_adjacent;
 
@@ -120,11 +125,15 @@ double getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, d
         //cout << "newColor: " << bestSecondNodeColorIterator << "\n";
     }
 
+    printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
+
     if (maxColorValueInit)
     {
         updateNodeColor(avaliableColors, coloration, nodeAjacencyList, bestFirstNodeColorIterator, bestFirstNodeIterator, adjacentNodeQuantity[bestFirstNodeIterator], colorCount, totalColorWeights, weights);
         updateNodeColor(avaliableColors, coloration, nodeAjacencyList, bestSecondNodeColorIterator, bestSecondNodeIterator, adjacentNodeQuantity[bestSecondNodeIterator], colorCount, totalColorWeights, weights);
     }
+
+    printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
 
     //cout << "new maxColorValue: " << maxColorValue << "\n";
 
