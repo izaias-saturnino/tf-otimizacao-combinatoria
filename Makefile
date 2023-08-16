@@ -9,9 +9,9 @@ link: compile
 	rm -f main.o neighbours.o utils.o grasp.o greedy.o
 
 test: 
-	g++ -g -c test.cpp neighbours.cpp utils.cpp grasp.cpp greedy.cpp
-	g++ -g -o cmb_test test.o neighbours.o utils.o grasp.o greedy.o -Wall -O3
-	rm -f test.o neighbours.o utils.o grasp.o greedy.o
+	g++ -g -c test.cpp utils.cpp
+	g++ -g -o cmb_test test.o utils.o -Wall -O3
+	rm -f test.o utils.o
 
 # Comando padrão do Makefile, executa o alvo "run" por padrão
 .DEFAULT_GOAL := link
