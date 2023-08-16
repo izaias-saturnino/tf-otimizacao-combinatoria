@@ -5,13 +5,13 @@ int main() {
     int nodeCount = 0;
     int edgeCount = 0;
     int colorCount = 0;
-    double minimal_possible_max_value = numeric_limits<double>::infinity()*-1;
+    float minimal_possible_max_value = numeric_limits<float>::infinity()*-1;
 
     scanf("%d", &nodeCount);
     scanf("%d", &edgeCount);
     scanf("%d", &colorCount);
 
-    double weights[nodeCount];
+    float weights[nodeCount];
 
     //reading weights
     for(int i = 0; i < nodeCount; i++){

@@ -2,14 +2,14 @@
 #include "utils.hpp"
 #include "greedy.hpp"
 
-int getNodeBestStepColor(int colorCount, double* totalColorWeights, int node, int* avaliableColors){
+int getNodeBestStepColor(int colorCount, float* totalColorWeights, int node, int* avaliableColors){
     int* nodeAvaliableColors = &(avaliableColors[node*colorCount]);
     int nodeBestColor = getLowestAvaliableColor(totalColorWeights, nodeAvaliableColors, colorCount);
     
     return nodeBestColor;
 }
 
-int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, double* totalColorWeights, int node, int adjacentNodeQuantity, int* recolorationCount){
+int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, float* totalColorWeights, int node, int adjacentNodeQuantity, int* recolorationCount){
 
     int bestColor = 0;
     
@@ -49,7 +49,7 @@ int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* color
     return bestColor;
 }
 
-int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, double* weights, int* coloration, double* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0){
+int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0){
 
     for (int i = 0; i < colorCount; i++)
     {
@@ -100,7 +100,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, d
         //while prioroty queue is not empty
         do{
             clock_t t_diff = clock() - t0;
-            double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
+            float time_taken = ((float)t_diff)/CLOCKS_PER_SEC;
 
             if(time_taken > TIMEOUT){
                 return UNDEFINED;

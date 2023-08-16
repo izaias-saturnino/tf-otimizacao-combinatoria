@@ -2,7 +2,7 @@
 #include <chrono>
 #include <thread>
 
-int getLowestAvaliableColor(double* totalColorWeights, int* avaliableColors, int colorCount){
+int getLowestAvaliableColor(float* totalColorWeights, int* avaliableColors, int colorCount){
     int lowestAvaliableColor = UNDEFINED;
     int lowestTotalColorWeights = 0;
     for (int i = 0; i < colorCount; i++)
@@ -33,7 +33,7 @@ void printVectorAsMatrix(int* vector, int rowCount, int colCount){
     }
 }
 
-void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, double* totalColorWeights, double* weights, int& totalColoredNodes, bool* coloredNodes){
+void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights, int& totalColoredNodes, bool* coloredNodes){
     int nodeColor = coloration[node];
     if (nodeColor != UNDEFINED)
     {
@@ -49,7 +49,7 @@ void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyLi
     updateNodeColor(avaliableColors, coloration, nodeAjacencyList, nodeBestColor, node, adjacentNodesCount, colorCount, totalColorWeights, weights);
 }
 
-void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, double* totalColorWeights, double* weights){
+void updateNodeColor(int* avaliableColors, int* coloration, int** nodeAjacencyList, int nodeBestColor, int node, int adjacentNodesCount, int colorCount, float* totalColorWeights, float* weights){
 
     int nodeColor = coloration[node];
 

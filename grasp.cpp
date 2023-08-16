@@ -3,9 +3,9 @@
 #include "utils.hpp"
 #include "neighbours.hpp"
 
-double grasp(int nodeCount, int colorCount, int** nodeAjacencyList, double* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0, int* edges, int edgeCount){
-    double totalColorWeights[colorCount];
-    double maxValue = numeric_limits<double>::infinity();
+float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0, int* edges, int edgeCount){
+    float totalColorWeights[colorCount];
+    float maxValue = numeric_limits<float>::infinity();
 
     //The cell[node][color] is equal to the number of adjacent nodes with the same color
     int avaliableColors[nodeCount][colorCount];
@@ -73,7 +73,7 @@ double grasp(int nodeCount, int colorCount, int** nodeAjacencyList, double* weig
     cout << "end of greedyConstruction\n";
 
     clock_t t_diff = clock() - t0;
-    double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
+    float time_taken = ((float)t_diff)/CLOCKS_PER_SEC;
 
     cout << "time taken for greedyConstruction in seconds: " << time_taken << "\n";
 
@@ -95,17 +95,17 @@ double grasp(int nodeCount, int colorCount, int** nodeAjacencyList, double* weig
 
     cout << "greedyConstruction maxValue: " << maxValue << "\n";
 
-    double totalColorWeightsCopy[colorCount];
+    float totalColorWeightsCopy[colorCount];
 
     int colorationCopy[nodeCount];
     
-    double oldMaxValue = maxValue;
+    float oldMaxValue = maxValue;
 
     int firstNode, secondNode, firstColor, secondColor = UNDEFINED;
 
     do{
         clock_t t_diff = clock() - t0;
-        double time_taken = ((double)t_diff)/CLOCKS_PER_SEC;
+        float time_taken = ((float)t_diff)/CLOCKS_PER_SEC;
 
         if(time_taken > TIMEOUT){
             break;

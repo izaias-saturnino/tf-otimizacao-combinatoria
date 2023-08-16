@@ -1,7 +1,7 @@
 #include "neighbours.hpp"
 #include "utils.hpp"
 
-double getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeNewColor, int firstNode, int secondNode, double* totalColorWeights, double* weights, int colorCount){
+float getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNodeNewColor, int firstNode, int secondNode, float* totalColorWeights, float* weights, int colorCount){
 
     int firstNodeCurrentColor = coloration[firstNode];
     int secondNodeCurrentColor = coloration[secondNode];
@@ -12,7 +12,7 @@ double getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNo
     totalColorWeights[secondNodeCurrentColor] -= weights[secondNode];
     totalColorWeights[secondNodeNewColor] += weights[secondNode];
 
-    double maxColorValue = totalColorWeights[0];
+    float maxColorValue = totalColorWeights[0];
 
     for(int i = 0; i < colorCount; i++){
         if(totalColorWeights[i] > maxColorValue){
@@ -23,7 +23,7 @@ double getColorChangesValue(int* coloration, int firstNodeNewColor, int secondNo
     return maxColorValue;
 }
 
-double getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, double* totalColorWeights, int* coloration, double maxColorValue, double* weights, int* avaliableColors, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, int* adjacentNodeQuantity, int& firstNode, int& secondNode, int& firstColor, int& secondColor){
+float getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, float* totalColorWeights, int* coloration, float maxColorValue, float* weights, int* avaliableColors, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, int* adjacentNodeQuantity, int& firstNode, int& secondNode, int& firstColor, int& secondColor){
 
     if(colorCount == 1){
         return maxColorValue;
@@ -40,7 +40,7 @@ double getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, d
     int bestFirstNodeColorIterator = coloration[bestFirstNodeIterator];
     int bestSecondNodeColorIterator = coloration[bestSecondNodeIterator];
 
-    double totalColorWeightsCopy[colorCount];
+    float totalColorWeightsCopy[colorCount];
 
     //old
     //cout << "getBestNeighbour\n";
@@ -76,7 +76,7 @@ double getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, d
                                 totalColorWeightsCopy[i] = totalColorWeights[i];
                             }
 
-                            double newValue = getColorChangesValue(coloration, firstNodeColorIterator, secondNodeColorIterator, firstNodeIterator, secondNodeIterator, totalColorWeightsCopy, weights, colorCount);
+                            float newValue = getColorChangesValue(coloration, firstNodeColorIterator, secondNodeColorIterator, firstNodeIterator, secondNodeIterator, totalColorWeightsCopy, weights, colorCount);
 
                             //old
                             //cout << "getColorChangesValue\n";
@@ -125,7 +125,7 @@ double getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, d
         //cout << "newColor: " << bestSecondNodeColorIterator << "\n";
     }
 
-    printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
+    //printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
 
     if (maxColorValueInit)
     {
@@ -133,7 +133,7 @@ double getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, d
         updateNodeColor(avaliableColors, coloration, nodeAjacencyList, bestSecondNodeColorIterator, bestSecondNodeIterator, adjacentNodeQuantity[bestSecondNodeIterator], colorCount, totalColorWeights, weights);
     }
 
-    printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
+    //printVectorAsMatrix(avaliableColors, nodeCount, colorCount);
 
     //cout << "new maxColorValue: " << maxColorValue << "\n";
 
