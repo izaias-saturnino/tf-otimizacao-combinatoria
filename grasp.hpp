@@ -4,6 +4,6 @@
 #include "utils.hpp"
 
 //returns the max value after one iteration of the grasp meta heuristic. changes the value of the coloration array to the local minimum values
-double grasp(int nodeCount, int colorCount, int** nodeAjacencyList, double* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* ajacencyHash, clock_t t0);
+double grasp(int nodeCount, int colorCount, int** nodeAjacencyList, double* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* ajacencyHash, clock_t t0, int* edges, int edgeCount);
 
 #endif /* _GRASP_H_ */

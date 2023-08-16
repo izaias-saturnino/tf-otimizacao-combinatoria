@@ -113,7 +113,7 @@ int main() {
             break;
         }
 
-        double newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0);
+        double newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0, &edges[0][0], edgeCount);
 
         //check if solution is valid
 
