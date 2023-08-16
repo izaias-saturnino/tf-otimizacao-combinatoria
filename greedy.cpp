@@ -56,9 +56,6 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
         totalColorWeights[i] = 0;
     }
 
-    //used by greedy coloring along with adjacent node count
-    int avaliableColorQuantity[nodeCount] = {colorCount};
-
     //priority queue ((adjacentNodeCount, random) : node)
     priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int>>, CompareNodes> orderedNodes;
 
