@@ -3,7 +3,7 @@
 #include "utils.hpp"
 #include "neighbours.hpp"
 
-float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0, int* edges, int edgeCount){
+float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0/*, int* edges, int edgeCount*/){
     float totalColorWeights[colorCount];
     float maxValue = numeric_limits<float>::infinity();
 
@@ -25,38 +25,38 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
     //check if solution is valid
 
     //check for full coloration
-    bool full = true;
+    //bool full = true;
 
-    for (int i = 0; i < nodeCount; i++)
-    {
-        if (coloration[i] == UNDEFINED || coloration[i] >= colorCount)
-        {
-            full = false;
-            cout << "ERROR: coloration[" << i << "] is UNDEFINED\n";
-        }
-    }
+    //for (int i = 0; i < nodeCount; i++)
+    //{
+    //    if (coloration[i] == UNDEFINED || coloration[i] >= colorCount)
+    //    {
+    //        full = false;
+    //        cout << "ERROR: coloration[" << i << "] is UNDEFINED\n";
+    //    }
+    //}
 
-    if(!full){
-        cout << "ERROR: expected full greedy coloration\n";
-    }
+    //if(!full){
+    //    cout << "ERROR: expected full greedy coloration\n";
+    //}
     //end of check for full coloration
 
-    bool satisfies = true;
-    for (int i = 0; i < edgeCount; i++)
-    {
-        int firstNode = edges[i*2];
-        int secondNode = edges[i*2 + 1];
-        if (coloration[firstNode] == coloration[secondNode])
-        {
-            satisfies = false;
-            cout << "ERROR: node " << firstNode << " has the same color as node " << secondNode << " and both nodes are adjacent\n";
-        }
-    }
+    //bool satisfies = true;
+    //for (int i = 0; i < edgeCount; i++)
+    //{
+    //    int firstNode = edges[i*2];
+    //    int secondNode = edges[i*2 + 1];
+    //    if (coloration[firstNode] == coloration[secondNode])
+    //    {
+    //        satisfies = false;
+    //        cout << "ERROR: node " << firstNode << " has the same color as node " << secondNode << " and both nodes are adjacent\n";
+    //    }
+    //}
 
-    if (!satisfies)
-    {
-        cout << "ERROR: greedy coloration does not satisfy restrictions\n";
-    }
+    //if (!satisfies)
+    //{
+    //    cout << "ERROR: greedy coloration does not satisfy restrictions\n";
+    //}
     //end of solution verification
 
     if (returnValue == UNDEFINED)

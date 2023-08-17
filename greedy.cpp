@@ -58,6 +58,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
     //priority queue ((adjacentNodeCount, random) : node)
     priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int>>, CompareNodes> orderedNodes;
+    bool inOrderedNodes[nodeCount] = {false};
 
     bool coloredNodes[nodeCount] = {false};
     
@@ -91,8 +92,12 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
         //cout << "random node pos: " << node << "\n";
 
         //TODO change random for weights[node] to see if there are better results
-        int random = rand();
-        orderedNodes.push({{adjacentNodeQuantity[node], random}, node});
+        if (!inOrderedNodes[node])
+        {
+            int random = rand();
+            orderedNodes.push({{adjacentNodeQuantity[node], random}, node});
+            inOrderedNodes[node] = true;
+        }
 
         //while prioroty queue is not empty
         do{
@@ -109,6 +114,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             orderedNodes.pop();
 
             if(coloredNodes[top_item.second]){
+                inOrderedNodes[node] = false;
                 continue;
             }
 
@@ -129,8 +135,12 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                     {
                         updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, UNDEFINED, currentAdjacentNode, adjacentNodeQuantity[currentAdjacentNode], colorCount, totalColorWeights, weights, totalColoredNodes, coloredNodes);
                         //TODO change random for weights[node] to see if there are better results
-                        int random = rand();
-                        orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
+                        if (!inOrderedNodes[currentAdjacentNode])
+                        {
+                            int random = rand();
+                            orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
+                            inOrderedNodes[currentAdjacentNode] = true;
+                        }
                     }
                 }
             }
@@ -146,20 +156,24 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                     continue;
                 }
                 //TODO change random for weights[node] to see if there are better results
-                int random = rand();
-                orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
+                if (!inOrderedNodes[currentAdjacentNode])
+                {
+                    int random = rand();
+                    orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
+                    inOrderedNodes[currentAdjacentNode] = true;
+                }
             }
 
             //cout << "coloration:\n";
 
-            for (int i = 0; i < nodeCount; i++)
-            {
+            //for (int i = 0; i < nodeCount; i++)
+            //{
                 //cout << coloration[i] << " ";
-            }
+            //}
 
             //cout << "\n";
             
-
+            inOrderedNodes[node] = false;
         }while(!orderedNodes.empty());
         //if there are nodes left, start the process again
     }

@@ -38,45 +38,48 @@ int main() {
     int* nodeAjacencyList[nodeCount];
 
     //reading edges
-    int edges[edgeCount][2];
-
-    for (int i = 0; i < edgeCount; i++){
-        int firstNode;
-        int secondNode;
-        scanf("%d", &firstNode);
-        scanf("%d", &secondNode);
-
-        edges[i][0] = firstNode;
-        edges[i][1] = secondNode;
-
-        //updating edges number for each node
-        adjacentNodeListLength[firstNode]++;
-        adjacentNodeListLength[secondNode]++;
-    }
-
-    //creating array for each node to fill the nodeAjacencyLists with the adjacent nodes numbers
-    for (int i = 0; i < nodeCount; i++)
     {
-        int nodeListLength = adjacentNodeListLength[i];
-        nodeAjacencyList[i] = new int[nodeListLength];
+        int edges[edgeCount][2];
+
+        for (int i = 0; i < edgeCount; i++){
+            int firstNode;
+            int secondNode;
+            scanf("%d", &firstNode);
+            scanf("%d", &secondNode);
+
+            edges[i][0] = firstNode;
+            edges[i][1] = secondNode;
+
+            //updating edges number for each node
+            adjacentNodeListLength[firstNode]++;
+            adjacentNodeListLength[secondNode]++;
+        }
+
+        //creating array for each node to fill the nodeAjacencyLists with the adjacent nodes numbers
+        for (int i = 0; i < nodeCount; i++)
+        {
+            int nodeListLength = adjacentNodeListLength[i];
+            nodeAjacencyList[i] = new int[nodeListLength];
+        }
+
+        //filling the hash with the edges
+        for (int i = 0; i < edgeCount; i++)
+        {
+            int firstNode = edges[i][0];
+            int secondNode = edges[i][1];
+
+            adjacencyHash.insert(make_pair(firstNode, secondNode));
+            adjacencyHash.insert(make_pair(secondNode, firstNode));
+
+            //filling the nodeAjacencyList with the edges
+            nodeAjacencyList[firstNode][adjacentNodeListInitCounter[firstNode]] = secondNode;
+            adjacentNodeListInitCounter[firstNode]++;
+
+            nodeAjacencyList[secondNode][adjacentNodeListInitCounter[secondNode]] = firstNode;
+            adjacentNodeListInitCounter[secondNode]++;
+        }
     }
 
-    //filling the hash with the edges
-    for (int i = 0; i < edgeCount; i++)
-    {
-        int firstNode = edges[i][0];
-        int secondNode = edges[i][1];
-
-        adjacencyHash.insert(make_pair(firstNode, secondNode));
-        adjacencyHash.insert(make_pair(secondNode, firstNode));
-
-        //filling the nodeAjacencyList with the edges
-        nodeAjacencyList[firstNode][adjacentNodeListInitCounter[firstNode]] = secondNode;
-        adjacentNodeListInitCounter[firstNode]++;
-
-        nodeAjacencyList[secondNode][adjacentNodeListInitCounter[secondNode]] = firstNode;
-        adjacentNodeListInitCounter[secondNode]++;
-    }
     //finish reading instance
 
     int maxColoration[nodeCount] = {UNDEFINED};
@@ -113,43 +116,43 @@ int main() {
             break;
         }
 
-        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0, &edges[0][0], edgeCount);
+        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0/*, &edges[0][0], edgeCount*/);
 
         //check if solution is valid
 
         //check for full coloration
-        bool full = true;
+        //bool full = true;
 
-        for (int i = 0; i < nodeCount; i++)
-        {
-            if (currentColorationPointer[i] == UNDEFINED || currentColorationPointer[i] >= colorCount)
-            {
-                full = false;
-                cout << "ERROR: coloration[" << i << "] is UNDEFINED\n";
-            }
-        }
+        //for (int i = 0; i < nodeCount; i++)
+        //{
+        //    if (currentColorationPointer[i] == UNDEFINED || currentColorationPointer[i] >= colorCount)
+        //    {
+        //        full = false;
+        //        cout << "ERROR: coloration[" << i << "] is UNDEFINED\n";
+        //    }
+        //}
 
-        if(!full){
-            cout << "ERROR: expected full coloration\n";
-        }
+        //if(!full){
+        //    cout << "ERROR: expected full coloration\n";
+        //}
         //end of check for full coloration
 
-        bool satisfies = true;
-        for (int i = 0; i < edgeCount; i++)
-        {
-            int firstNode = edges[i][0];
-            int secondNode = edges[i][1];
-            if (currentColorationPointer[firstNode] == currentColorationPointer[secondNode])
-            {
-                satisfies = false;
-                cout << "ERROR: node " << firstNode << " has the same color as node " << secondNode << " and both nodes are adjacent\n";
-            }
-        }
+        //bool satisfies = true;
+        //for (int i = 0; i < edgeCount; i++)
+        //{
+        //    int firstNode = edges[i][0];
+        //    int secondNode = edges[i][1];
+        //    if (currentColorationPointer[firstNode] == currentColorationPointer[secondNode])
+        //    {
+        //        satisfies = false;
+        //        cout << "ERROR: node " << firstNode << " has the same color as node " << secondNode << " and both nodes are adjacent\n";
+        //    }
+        //}
 
-        if (!satisfies)
-        {
-            cout << "ERROR: coloration does not satisfy restrictions\n";
-        }
+        //if (!satisfies)
+        //{
+        //    cout << "ERROR: coloration does not satisfy restrictions\n";
+        //}
         //end of solution verification
 
         cout << "newMaxValue: " << newMaxValue <<"\n";
