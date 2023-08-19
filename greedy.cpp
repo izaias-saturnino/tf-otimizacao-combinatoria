@@ -59,22 +59,14 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
     //priority queue ((adjacentNodeCount, random) : node)
     priority_queue<pair<pair<int, int>, int>, vector<pair<pair<int, int>, int>>, CompareNodes> orderedNodes;
     bool inOrderedNodes[nodeCount] = {false};
+
+    bool coloredNodes[nodeCount] = {false};
     
     int totalColoredNodes = 0;
 
     int returnValue = 0;
 
-    int recolorationCountMatrix[nodeCount][colorCount];
-
-    for (int i = 0; i < nodeCount; i++)
-    {
-        for (int j = 0; j < colorCount; i++)
-        {
-            recolorationCountMatrix[i][j] = 0;
-        }
-    }
-    
-
+    int recolorationCountMatrix[nodeCount][colorCount] = {0};
     int* recolorationCount = &(recolorationCountMatrix[0][0]);
 
     while(totalColoredNodes < nodeCount){
@@ -85,7 +77,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
         for (int i = 0; i < nodeCount; i++)
         {
-            if (coloration[i] == UNDEFINED)
+            if (coloredNodes[i] == false)
             {
                 if (randomNodeIndex == 0)
                 {
@@ -121,7 +113,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
             orderedNodes.pop();
 
-            if(coloration[top_item.second] != UNDEFINED){
+            if(coloredNodes[top_item.second]){
                 inOrderedNodes[node] = false;
                 continue;
             }
@@ -141,7 +133,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                     int currentAdjacentNode = nodeAdjacencyList[node][i];
                     if (coloration[currentAdjacentNode] == color)
                     {
-                        updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, UNDEFINED, currentAdjacentNode, adjacentNodeQuantity[currentAdjacentNode], colorCount, totalColorWeights, weights, totalColoredNodes);
+                        updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, UNDEFINED, currentAdjacentNode, adjacentNodeQuantity[currentAdjacentNode], colorCount, totalColorWeights, weights, totalColoredNodes, coloredNodes);
                         //TODO change random for weights[node] to see if there are better results
                         if (!inOrderedNodes[currentAdjacentNode])
                         {
@@ -153,14 +145,14 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                 }
             }
 
-            updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, color, node, adjacentNodeQuantity[node], colorCount, totalColorWeights, weights, totalColoredNodes);
+            updateNodeColor(avaliableColors, coloration, nodeAdjacencyList, color, node, adjacentNodeQuantity[node], colorCount, totalColorWeights, weights, totalColoredNodes, coloredNodes);
 
             //add adjacent nodes to priority queue
             int adjacentNodesNumber = adjacentNodeQuantity[node];
             for (int i = 0; i < adjacentNodesNumber; i++)
             {
                 int currentAdjacentNode = nodeAdjacencyList[node][i];
-                if (coloration[currentAdjacentNode] != UNDEFINED){
+                if (coloredNodes[currentAdjacentNode]){
                     continue;
                 }
                 //TODO change random for weights[node] to see if there are better results

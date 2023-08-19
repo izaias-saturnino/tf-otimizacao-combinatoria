@@ -4,7 +4,7 @@
 #include "neighbours.hpp"
 
 float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0/*, int* edges, int edgeCount*/){
-    float totalColorWeights[colorCount] = {0.0};
+    float totalColorWeights[colorCount];
     float maxValue = numeric_limits<float>::infinity();
 
     //The cell[node][color] is equal to the number of adjacent nodes with the same color
