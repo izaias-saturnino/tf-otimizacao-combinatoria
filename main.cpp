@@ -1,7 +1,18 @@
 #include "utils.hpp"
 #include "grasp.hpp"
 
-int main() {
+int main(int argc, char* argv[]) {
+
+    if (argc < 3){
+        cout << "Seed not provided\n";
+        cout << "Using time as default seed\n";
+        if (argc < 2){
+            cout << "File name not provided\n";
+        }
+        cout << "Usage:\n";
+        cout << "./cmb <filename> <seed>\n\n";
+    }
+
     //read instance
     int nodeCount = 0;
     int edgeCount = 0;
@@ -164,6 +175,19 @@ int main() {
             maxColorationPointer = currentColorationPointer;
             currentColorationPointer = maxColorationPointerCopy;
         }
+    }
+
+    if (argc >= 2)
+    {
+        std::string filename = argv[1];
+        std::ofstream outputFile(filename);
+        outputFile << "finalMaxValue: " << maxValue <<"\n";
+        outputFile << "coloration:\n";
+        for (int i = 0; i < nodeCount; i++)
+        {
+            outputFile << maxColorationPointer[i] << " ";
+        }
+        outputFile.close();
     }
 
     cout << "finalMaxValue: " << maxValue <<"\n";
