@@ -84,7 +84,7 @@ int main() {
 
     int maxColoration[nodeCount] = {UNDEFINED};
 
-    int currentColoration[nodeCount];
+    int currentColoration[nodeCount] = {UNDEFINED};
     int* maxColorationPointer = maxColoration;
     int* currentColorationPointer = currentColoration;
 
