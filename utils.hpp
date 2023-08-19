@@ -9,9 +9,9 @@
 #include <limits>
 #include <time.h>
 #include <fstream>
+#include <random>
 
 #define UNDEFINED -1
-#define TIMEOUT 3600*4
 
 using namespace std;
 

@@ -3,15 +3,35 @@
 
 int main(int argc, char* argv[]) {
 
-    if (argc < 3){
+    srand(time(NULL));
+
+    string input_seed;
+
+    float max_time = 60.0f;
+
+    if (argc < 4){
+        cout << "Usage:\n";
+        cout << "./cmb <filename> <time_in_seconds> <seed>\n\n";
+        if (argc < 3){
+            if (argc < 2){
+                cout << "File name not provided\n";
+            }
+            cout << "Time in seconds for timeout not provided\n";
+            cout << "Using 60 seconds as default\n";
+        }
+        else{
+            max_time = atof(argv[2]);
+        }
         cout << "Seed not provided\n";
         cout << "Using time as default seed\n";
-        if (argc < 2){
-            cout << "File name not provided\n";
-        }
-        cout << "Usage:\n";
-        cout << "./cmb <filename> <seed>\n\n";
+        input_seed = {(char) rand()};
     }
+    else{
+        input_seed = argv[3];
+    }
+
+    seed_seq seed(input_seed.begin(), input_seed.end());
+    mt19937 randomGenerator(seed);
 
     //read instance
     int nodeCount = 0;
@@ -107,8 +127,6 @@ int main(int argc, char* argv[]) {
     float maxValue = numeric_limits<float>::infinity();
     float newMaxValue;
 
-    srand(time(NULL));
-
     while(maxValue != minimal_possible_max_value){
 
         //clear currentColorationPointer to reuse in GRASP
@@ -122,12 +140,12 @@ int main(int argc, char* argv[]) {
 
         cout << "time taken for GRASP iteration in seconds: " << time_taken << "\n";
 
-        if(time_taken > TIMEOUT){
+        if(time_taken > max_time){
             cout << "timeout\n";
             break;
         }
 
-        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0/*, &edges[0][0], edgeCount*/);
+        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0, randomGenerator, max_time/*, &edges[0][0], edgeCount*/);
 
         //check if solution is valid
 
@@ -179,8 +197,8 @@ int main(int argc, char* argv[]) {
 
     if (argc >= 2)
     {
-        std::string filename = argv[1];
-        std::ofstream outputFile(filename);
+        string filename = argv[1];
+        ofstream outputFile(filename);
         outputFile << "finalMaxValue: " << maxValue <<"\n";
         outputFile << "coloration:\n";
         for (int i = 0; i < nodeCount; i++)

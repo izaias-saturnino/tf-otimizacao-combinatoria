@@ -9,7 +9,9 @@ int getNodeBestStepColor(int colorCount, float* totalColorWeights, int node, int
     return nodeBestColor;
 }
 
-int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, float* totalColorWeights, int node, int adjacentNodeQuantity, int* recolorationCount){
+int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, float* totalColorWeights, int node, int adjacentNodeQuantity, int* recolorationCount, mt19937 generator){
+
+    uniform_int_distribution<int> distribution;
 
     int bestColor = 0;
     
@@ -37,7 +39,7 @@ int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* color
             }
             else if (adjacentNodeColorOccurance[i] == adjacentNodeColorOccurance[bestColor])
             {
-                int random = rand() % colorCount;
+                int random = distribution(generator);
                 if (random == 0)
                 {
                     bestColor = i;
@@ -49,7 +51,9 @@ int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* color
     return bestColor;
 }
 
-int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0){
+int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0, mt19937 generator, float max_time){
+
+    uniform_int_distribution<int> distribution;
 
     for (int i = 0; i < colorCount; i++)
     {
@@ -73,7 +77,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
         //start with a random node
         int node = UNDEFINED;
-        int randomNodeIndex = rand() % (nodeCount-totalColoredNodes);
+        int randomNodeIndex = distribution(generator) % (nodeCount-totalColoredNodes);
 
         for (int i = 0; i < nodeCount; i++)
         {
@@ -94,7 +98,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
         //TODO change random for weights[node] to see if there are better results
         if (!inOrderedNodes[node])
         {
-            int random = rand();
+            int random = distribution(generator);
             orderedNodes.push({{adjacentNodeQuantity[node], random}, node});
             inOrderedNodes[node] = true;
         }
@@ -104,7 +108,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             clock_t t_diff = clock() - t0;
             float time_taken = ((float)t_diff)/CLOCKS_PER_SEC;
 
-            if(time_taken > TIMEOUT){
+            if(time_taken > max_time){
                 return UNDEFINED;
             }
 
@@ -125,7 +129,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             if (color == UNDEFINED)
             {
                 //cout << "node recoloration\n";
-                color = getNodeRecolorationColor(colorCount, nodeAdjacencyList, coloration, totalColorWeights, node, adjacentNodeQuantity[node], recolorationCount);
+                color = getNodeRecolorationColor(colorCount, nodeAdjacencyList, coloration, totalColorWeights, node, adjacentNodeQuantity[node], recolorationCount, generator);
                 
                 int adjacentNodesNumber = adjacentNodeQuantity[node];
                 for (int i = 0; i < adjacentNodesNumber; i++)
@@ -137,7 +141,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                         //TODO change random for weights[node] to see if there are better results
                         if (!inOrderedNodes[currentAdjacentNode])
                         {
-                            int random = rand();
+                            int random = distribution(generator);
                             orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
                             inOrderedNodes[currentAdjacentNode] = true;
                         }
@@ -158,7 +162,7 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                 //TODO change random for weights[node] to see if there are better results
                 if (!inOrderedNodes[currentAdjacentNode])
                 {
-                    int random = rand();
+                    int random = distribution(generator);
                     orderedNodes.push({{adjacentNodeQuantity[currentAdjacentNode], random}, currentAdjacentNode});
                     inOrderedNodes[currentAdjacentNode] = true;
                 }
