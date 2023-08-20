@@ -22,6 +22,6 @@ int getNodeBestStepColor(int colorCount, float* totalColorWeights, int node, int
 int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* coloration, float* totalColorWeights, int node, int adjacentNodeQuantity, int* recolorationCount);
 
 //colors the graph following the getNodeBestStepColor() heuristic. returns UNDEFINED if was not able to construct following the heuristic
-int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0);
+int greedyConstruction(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0, float max_time);
 
 #endif /* _GREEDY_H_ */

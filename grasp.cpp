@@ -3,7 +3,7 @@
 #include "utils.hpp"
 #include "neighbours.hpp"
 
-float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0/*, int* edges, int edgeCount*/){
+float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weights, int* coloration, int* adjacentNodeListLength, unordered_set<pair<int, int>, TupleHash>* adjacencyHash, clock_t t0, float max_time/*, int* edges, int edgeCount*/){
     float totalColorWeights[colorCount];
     float maxValue = numeric_limits<float>::infinity();
 
@@ -20,7 +20,7 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
 
     //cout << "start of greedyConstruction\n";
 
-    int returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeListLength, &avaliableColors[0][0], t0);
+    int returnValue = greedyConstruction(nodeCount, colorCount, nodeAjacencyList, weights, coloration, totalColorWeights, adjacentNodeListLength, &avaliableColors[0][0], t0, max_time);
 
     //check if solution is valid
 
@@ -107,7 +107,7 @@ float grasp(int nodeCount, int colorCount, int** nodeAjacencyList, float* weight
         clock_t t_diff = clock() - t0;
         float time_taken = ((float)t_diff)/CLOCKS_PER_SEC;
 
-        if(time_taken > TIMEOUT){
+        if(time_taken > max_time){
             break;
         }
 

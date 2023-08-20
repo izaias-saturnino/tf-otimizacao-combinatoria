@@ -3,10 +3,30 @@
 
 int main(int argc, char* argv[]) {
 
-    if (argc < 2){
+    float max_time = 60.0f;
+
+    srand(time(NULL));
+
+    if (argc < 4){
         cout << "Usage:\n";
-        cout << "./cmb <filename>\n\n";
+        cout << "./cmb <filename> <time_in_seconds> <seed>\n";
+        cout << "Where time_in_seconds is a real number and seed is an integer\n";
+        cout << "\n";
+    }
+    if (argc < 2){
         cout << "File name not provided\n";
+    }
+    if (argc < 3){
+        cout << "Time in seconds not provided. Running for 60 seconds.\n";
+    }
+    else{
+        max_time = atof(argv[2]);
+    }
+    if (argc < 4){
+        cout << "Seed not provided. Using time as default seed.\n";
+    }
+    else{
+        srand(atoi(argv[3]));
     }
 
     //read instance
@@ -103,8 +123,6 @@ int main(int argc, char* argv[]) {
     float maxValue = numeric_limits<float>::infinity();
     float newMaxValue;
 
-    srand(time(NULL));
-
     while(maxValue != minimal_possible_max_value){
 
         //clear currentColorationPointer to reuse in GRASP
@@ -118,12 +136,12 @@ int main(int argc, char* argv[]) {
 
         cout << "time taken for GRASP iteration in seconds: " << time_taken << "\n";
 
-        if(time_taken > TIMEOUT){
+        if(time_taken > max_time){
             cout << "timeout\n";
             break;
         }
 
-        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0/*, &edges[0][0], edgeCount*/);
+        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0, max_time/*, &edges[0][0], edgeCount*/);
 
         //check if solution is valid
 
