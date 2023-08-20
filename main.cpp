@@ -3,14 +3,10 @@
 
 int main(int argc, char* argv[]) {
 
-    if (argc < 3){
-        cout << "Seed not provided\n";
-        cout << "Using time as default seed\n";
-        if (argc < 2){
-            cout << "File name not provided\n";
-        }
+    if (argc < 2){
         cout << "Usage:\n";
-        cout << "./cmb <filename> <seed>\n\n";
+        cout << "./cmb <filename>\n\n";
+        cout << "File name not provided\n";
     }
 
     //read instance
