@@ -10,24 +10,29 @@ int main(int argc, char* argv[]) {
     float max_time = 60.0f;
 
     if (argc < 4){
-        cout << "Usage:\n";
+        cout << "\nUsage:\n";
         cout << "./cmb <filename> <time_in_seconds> <seed>\n\n";
-        if (argc < 3){
-            if (argc < 2){
-                cout << "File name not provided\n";
-            }
-            cout << "Time in seconds for timeout not provided\n";
-            cout << "Using 60 seconds as default\n";
-        }
-        else{
-            max_time = atof(argv[2]);
-        }
+    }
+    if (argc >= 2){
+        //file name provided
+    }
+    else{
+        cout << "File name not provided\n";
+    }
+    if (argc >= 3){
+        max_time = atof(argv[2]);
+    }
+    else{
+        cout << "Time in seconds for timeout not provided\n";
+        cout << "Using 60 seconds as default\n";
+    }
+    if (argc >= 4){
+        input_seed = argv[3];
+    }
+    else{
         cout << "Seed not provided\n";
         cout << "Using time as default seed\n";
         input_seed = {(char) rand()};
-    }
-    else{
-        input_seed = argv[3];
     }
 
     seed_seq seed(input_seed.begin(), input_seed.end());
@@ -199,7 +204,7 @@ int main(int argc, char* argv[]) {
     {
         string filename = argv[1];
         ofstream outputFile(filename);
-        outputFile << "finalMaxValue: " << maxValue <<"\n";
+        outputFile << "final value: " << maxValue <<"\n";
         outputFile << "coloration:\n";
         for (int i = 0; i < nodeCount; i++)
         {

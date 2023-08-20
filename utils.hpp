@@ -12,6 +12,7 @@
 #include <random>
 
 #define UNDEFINED -1
+#define TIMEOUT 60*48
 
 using namespace std;
 
