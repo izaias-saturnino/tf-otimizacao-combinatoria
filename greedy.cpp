@@ -113,7 +113,9 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
             orderedNodes.pop();
 
-            if(coloredNodes[top_item.second]){
+            int node = top_item.second;
+
+            if(coloredNodes[node]){
                 inOrderedNodes[node] = false;
                 continue;
             }
