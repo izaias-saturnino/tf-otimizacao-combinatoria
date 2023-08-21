@@ -120,8 +120,6 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
                 continue;
             }
 
-            int node = top_item.second;
-
             int color = getNodeBestStepColor(colorCount, totalColorWeights, node, avaliableColors);
 
             if (color == UNDEFINED)
