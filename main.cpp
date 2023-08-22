@@ -5,18 +5,18 @@ int main(int argc, char* argv[]) {
 
     float max_time = 60.0f;
 
-    float max_greedy_time = max_time/10;
+    float max_greedy_time = max_time;
 
     srand(time(NULL));
 
     if (argc < 5){
         cout << "Usage:\n";
         cout << "./cmb <filename> <total_timeout> <seed> <initial_solution_timeout>\n";
-        cout << "Where total_timeout and initial_solution_timeout are real numbers and seed is an integer\n";
+        cout << "Where total_timeout and initial_solution_timeout are real numbers and seed is an integer.\n";
         cout << "\n";
     }
     if (argc < 2){
-        cout << "File name not provided\n";
+        cout << "File name not provided.\n";
     }
     if (argc < 3){
         cout << "Max time in seconds not provided. Running for 60 seconds.\n";
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
         srand(atoi(argv[3]));
     }
     if (argc < 5){
-        cout << "Max greedy time in seconds not provided. Running greedy construction with total_timeout/10 seconds.\n";
+        cout << "Max greedy time in seconds not provided.\n";
     }
     else{
         max_greedy_time = atof(argv[4]);
@@ -132,6 +132,8 @@ int main(int argc, char* argv[]) {
     float maxValue = numeric_limits<float>::infinity();
     float newMaxValue;
 
+    bool init = true;
+
     while(maxValue != minimal_possible_max_value){
 
         //clear currentColorationPointer to reuse in GRASP
@@ -143,7 +145,13 @@ int main(int argc, char* argv[]) {
         t_diff = clock() - t0;
         float time_taken = ((float)t_diff)/CLOCKS_PER_SEC;
 
-        cout << "time taken for GRASP iteration in seconds: " << time_taken << "\n";
+        if (!init)
+        {
+            cout << "time taken for GRASP iteration in seconds: " << time_taken << "\n";
+        }
+        else{
+            init = false;
+        }
 
         if(time_taken > max_time){
             cout << "timeout\n";
