@@ -49,7 +49,7 @@ int getNodeRecolorationColor(int colorCount, int** nodeAdjacencyList, int* color
     return bestColor;
 }
 
-int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0, float max_time){
+int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, float* weights, int* coloration, float* totalColorWeights, int* adjacentNodeQuantity, int* avaliableColors, clock_t t0, float max_time, float max_greedy_time){
 
     for (int i = 0; i < colorCount; i++)
     {
@@ -68,6 +68,8 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
 
     int recolorationCountMatrix[nodeCount][colorCount] = {0};
     int* recolorationCount = &(recolorationCountMatrix[0][0]);
+
+    clock_t t1 = clock();
 
     while(totalColoredNodes < nodeCount){
 
@@ -104,7 +106,10 @@ int greedyConstruction(int nodeCount, int colorCount, int** nodeAdjacencyList, f
             clock_t t_diff = clock() - t0;
             float time_taken = ((float)t_diff)/CLOCKS_PER_SEC;
 
-            if(time_taken > max_time){
+            clock_t t_diff_greedy = clock() - t1;
+            float time_taken_greedy = ((float)t_diff_greedy)/CLOCKS_PER_SEC;
+
+            if(time_taken > max_time || time_taken_greedy > max_greedy_time){
                 return UNDEFINED;
             }
 

@@ -5,19 +5,21 @@ int main(int argc, char* argv[]) {
 
     float max_time = 60.0f;
 
+    float max_greedy_time = max_time/10;
+
     srand(time(NULL));
 
-    if (argc < 4){
+    if (argc < 5){
         cout << "Usage:\n";
-        cout << "./cmb <filename> <time_in_seconds> <seed>\n";
-        cout << "Where time_in_seconds is a real number and seed is an integer\n";
+        cout << "./cmb <filename> <total_timeout> <seed> <initial_solution_timeout>\n";
+        cout << "Where total_timeout and initial_solution_timeout are real numbers and seed is an integer\n";
         cout << "\n";
     }
     if (argc < 2){
         cout << "File name not provided\n";
     }
     if (argc < 3){
-        cout << "Time in seconds not provided. Running for 60 seconds.\n";
+        cout << "Max time in seconds not provided. Running for 60 seconds.\n";
     }
     else{
         max_time = atof(argv[2]);
@@ -28,6 +30,13 @@ int main(int argc, char* argv[]) {
     else{
         srand(atoi(argv[3]));
     }
+    if (argc < 5){
+        cout << "Max greedy time in seconds not provided. Running greedy construction with total_timeout/10 seconds.\n";
+    }
+    else{
+        max_greedy_time = atof(argv[4]);
+    }
+
 
     //read instance
     int nodeCount = 0;
@@ -141,7 +150,7 @@ int main(int argc, char* argv[]) {
             break;
         }
 
-        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0, max_time/*, &edges[0][0], edgeCount*/);
+        float newMaxValue = grasp(nodeCount, colorCount, nodeAjacencyList, weights, currentColorationPointer, adjacentNodeListLength, &adjacencyHash, t0, max_time, max_greedy_time/*, &edges[0][0], edgeCount*/);
 
         //check if solution is valid
 
