@@ -5,8 +5,6 @@ int main(int argc, char* argv[]) {
 
     float max_time = 60.0f;
 
-    float max_greedy_time = max_time;
-
     srand(time(NULL));
 
     if (argc < 5){
@@ -30,6 +28,7 @@ int main(int argc, char* argv[]) {
     else{
         srand(atoi(argv[3]));
     }
+    float max_greedy_time = max_time;
     if (argc < 5){
         cout << "Max greedy time in seconds not provided.\n";
     }
