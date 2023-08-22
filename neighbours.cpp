@@ -42,24 +42,34 @@ float getBestNeighbour(int nodeCount, int colorCount, int** nodeAjacencyList, fl
 
     float totalColorWeightsCopy[colorCount];
 
+    int maxColor = 0;
+
+    for (int i = 0; i < colorCount; i++)
+    {
+        if (totalColorWeights[i] > totalColorWeights[maxColor])
+        {
+            maxColor = i;
+        }
+    }
+
     //old
     //cout << "getBestNeighbour\n";
 
-    for(int firstNodeIterator = 0; firstNodeIterator < nodeCount; firstNodeIterator++){
-        int* firstNodeAvaliableColors = &(avaliableColors[firstNodeIterator*colorCount]);
-        for(int secondNodeIterator = firstNodeIterator + 1; secondNodeIterator < nodeCount; secondNodeIterator++){
-            //old
-            //cout << "start\n";
-            //cout << "firstNodeIterator: " << firstNodeIterator << ". ";
-            //cout << "secondNodeIterator: " << secondNodeIterator << "\n";
+    for(int firstNodeColorIterator = 0; firstNodeColorIterator < colorCount; firstNodeColorIterator++){
+        for(int secondNodeColorIterator = 0; secondNodeColorIterator < colorCount; secondNodeColorIterator++){
 
-            int* secondNodeAvaliableColors = &(avaliableColors[secondNodeIterator*colorCount]);
-            
-            auto pair = make_pair(firstNodeIterator,secondNodeIterator);
-            bool nodes_adjacent = (*adjacencyHash).find(pair) != (*adjacencyHash).end();
-            
-            for(int firstNodeColorIterator = 0; firstNodeColorIterator < colorCount; firstNodeColorIterator++){
-                for(int secondNodeColorIterator = 0; secondNodeColorIterator < colorCount; secondNodeColorIterator++){
+            if (firstNodeColorIterator != maxColor && secondNodeColorIterator != maxColor)
+            {
+                continue;
+            }
+
+            for(int firstNodeIterator = 0; firstNodeIterator < nodeCount; firstNodeIterator++){
+                int* firstNodeAvaliableColors = &(avaliableColors[firstNodeIterator*colorCount]);
+                for(int secondNodeIterator = firstNodeIterator + 1; secondNodeIterator < nodeCount; secondNodeIterator++){
+                    int* secondNodeAvaliableColors = &(avaliableColors[secondNodeIterator*colorCount]);
+                    
+                    auto pair = make_pair(firstNodeIterator,secondNodeIterator);
+                    bool nodes_adjacent = (*adjacencyHash).find(pair) != (*adjacencyHash).end();
                     
                     if (nodes_adjacent && firstNodeColorIterator == secondNodeColorIterator)
                     {
