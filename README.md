@@ -239,9 +239,3 @@ Performance strongly depends on:
 
 * Time limit
 * Instance size and density
-
----
-
-## Author
-
-Project developed as an implementation of GRASP for weighted graph coloring.
